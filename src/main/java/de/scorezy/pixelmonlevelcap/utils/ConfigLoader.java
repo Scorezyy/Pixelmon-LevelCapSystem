@@ -13,7 +13,7 @@ public class ConfigLoader {
 
     private static final String CONFIG_FILE_NAME = "levelcap.properties";
     private static final Properties properties = new Properties();
-    private static final String[] DEFAULT_LEVELS = {"50", "20", "30", "40", "50", "60", "70", "100"};
+    private static final String[] DEFAULT_LEVELS = {"10", "20", "30", "40", "50", "60", "70", "80", "100"};
 
     public static void loadConfig() {
         Path configDir = FMLPaths.CONFIGDIR.get();
