@@ -5,10 +5,11 @@
 ## Features
 
 The mod checks how many badges the player has in their badge case and sets the level cap
+
 Default Values:
 
 ```
-- 1 Badge = Level 10
+- 1 Badges = Level 10
 - 2 Badges = Level 20
 - 3 Badges = Level 30
 - 4 Badges = Level 40
