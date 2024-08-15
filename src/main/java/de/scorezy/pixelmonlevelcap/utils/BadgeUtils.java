@@ -25,7 +25,6 @@ public class BadgeUtils {
         }
         return getDefaultLevel();
     }
-
     private static int getMaxLevel(int badgeCount) {
         return switch (badgeCount) {
             case 0 -> 10;

@@ -18,7 +18,7 @@ public class RaidCaptureEventListener {
             if (pokemonLevel > maxLevel) {
                 event.setCanceled(true);
                 player.sendMessage(new StringTextComponent("Du kannst dieses Pokémon nicht fangen, da dein Badge-Level nicht ausreicht!"), player.getUUID());
-                //Close RaidFenster Code muss noch hinzugefügt werden.
+                //Close RaidFenster Code muss noch hinzugefügt werden..
             }
         }
     }

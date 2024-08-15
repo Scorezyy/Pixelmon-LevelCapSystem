@@ -18,6 +18,7 @@ public class LevelUpEventListener {
             if (event.getAfterLevel() > maxLevel) {
                 event.setCanceled(true);
                 player.sendMessage(new StringTextComponent("Dieses Level ist zu hoch für dein Pokémon!"), player.getUUID());
+                //
             }
         }
     }

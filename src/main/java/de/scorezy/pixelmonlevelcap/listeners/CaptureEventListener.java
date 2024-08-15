@@ -14,7 +14,6 @@ public class CaptureEventListener {
         if (player != null && event.getPokemon() != null) {
             int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
             int pokemonLevel = event.getPokemon().getLvl().getPokemonLevel();
-
             if (pokemonLevel > maxLevel) {
                 event.setCanceled(true);
                 player.sendMessage(new StringTextComponent("Dieses Pokémon ist zu hoch für dich zum Fangen!"), player.getUUID());

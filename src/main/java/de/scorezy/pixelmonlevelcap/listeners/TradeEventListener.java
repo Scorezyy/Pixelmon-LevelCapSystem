@@ -16,7 +16,6 @@ public class TradeEventListener {
         if (player1 != null && player2 != null) {
             int maxLevelPlayer1 = BadgeUtils.getMaxLevelForPlayer(player1);
             int maxLevelPlayer2 = BadgeUtils.getMaxLevelForPlayer(player2);
-
             boolean shouldCancel = false;
             String message = "";
 

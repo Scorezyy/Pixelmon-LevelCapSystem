@@ -22,4 +22,5 @@ public class Main {
         Pixelmon.EVENT_BUS.register(new LevelUpEventListener());
         Pixelmon.EVENT_BUS.register(new RaidCaptureEventListener());
     }
+
 }

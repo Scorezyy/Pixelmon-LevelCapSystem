@@ -18,7 +18,6 @@ public class PlayerInteractListener {
 
             int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
             int pokemonLevel = pokemon.getLvl().getPokemonLevel();
-
             if (pokemonLevel > maxLevel) {
                 event.setCancellationResult(ActionResultType.FAIL);
                 event.setCanceled(true);
