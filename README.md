@@ -19,4 +19,5 @@ This level cap applies to both catching and trading Pixelmon. When a Pixelmon re
 
 ## To-Do
 
-- Implement a configuration file that allows customization of the level caps for each badge and the associated text messages.
+- Implement a configuration file that allows customization text messages.
+✅ The badge level can now be modified in the 'levelcap.properties'
