@@ -1,22 +1,22 @@
 ﻿# Pixelmon-LevelCapSystem
----
-**Pixelmon-LevelCapSystem** ist eine serverseitige Forge-Mod, die ein Level-Cap für den Pixelmon-Mod hinzufügt.
 
-## Funktionen
+**Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
 
-Die Mod überprüft, wie viele Orden der Spieler in seiner Ordentasche besitzt und setzt das entsprechende Level-Cap:
+## Features
 
-- 1 Orden = Level 10
-- 2 Orden = Level 20
-- 3 Orden = Level 30
-- 4 Orden = Level 40
-- 5 Orden = Level 50
-- 6 Orden = Level 60
-- 7 Orden = Level 70
-- 8 Orden = Level 100
+The mod checks how many badges the player has in their badge case and sets the corresponding level cap:
 
-Dieses Level-Cap gilt sowohl für das Fangen von Pixelmon als auch für den Tausch. Wenn ein Pixelmon durch Levelaufstieg das Level-Cap erreicht, wird das Level gespeichert, und sobald der Spieler den nächsten Orden erhält, steigt das Pixelmon automatisch mit den überschüssigen Erfahrungspunkten weiter auf.
+- 1 Badge = Level 10
+- 2 Badges = Level 20
+- 3 Badges = Level 30
+- 4 Badges = Level 40
+- 5 Badges = Level 50
+- 6 Badges = Level 60
+- 7 Badges = Level 70
+- 8 Badges = Level 100
+
+This level cap applies to both catching and trading Pixelmon. When a Pixelmon reaches the level cap through leveling up, its level is stored, and once the player earns the next badge, the Pixelmon automatically levels up with the remaining experience points.
 
 ## To-Do
 
-- Implementierung einer Konfigurationsdatei, in der das Level-Cap für die einzelnen Orden sowie die entsprechenden Textnachrichten eingestellt werden können.
+- Implement a configuration file that allows customization of the level caps for each badge and the associated text messages.
