@@ -20,26 +20,18 @@ public class BadgeUtils {
             BadgeCase badgeCase = BadgeCaseItem.BadgeCase.readFromItemStack(badgeCaseStack);
             if (badgeCase != null && badgeCase.isOwner(player)) {
                 int badgeCount = badgeCase.badges.size();
-                return getMaxLevel(badgeCount);
+                int maxLevel = getMaxLevel(badgeCount);
+                return maxLevel;
             }
         }
         return getDefaultLevel();
     }
+
     private static int getMaxLevel(int badgeCount) {
-        return switch (badgeCount) {
-            case 0 -> 10;
-            case 1 -> 20;
-            case 2 -> 30;
-            case 3 -> 40;
-            case 4 -> 50;
-            case 5 -> 60;
-            case 6 -> 70;
-            case 7 -> 100;
-            default -> 10; // Rückfallwert
-        };
+        return ConfigLoader.getBadgeLevel(badgeCount);
     }
 
     private static int getDefaultLevel() {
-        return 10;
+        return ConfigLoader.getBadgeLevel(0);
     }
 }
