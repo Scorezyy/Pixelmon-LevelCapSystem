@@ -16,13 +16,10 @@ public class BadgeUtils {
 
     public static int getMaxLevelForPlayer(ServerPlayerEntity player) {
         ItemStack badgeCaseStack = findBadgeCaseItemStack(player);
-        if (badgeCaseStack != null) {
-            BadgeCase badgeCase = BadgeCaseItem.BadgeCase.readFromItemStack(badgeCaseStack);
-            if (badgeCase != null && badgeCase.isOwner(player)) {
-                int badgeCount = badgeCase.badges.size();
-                int maxLevel = getMaxLevel(badgeCount);
-                return maxLevel;
-            }
+        BadgeCase badgeCase = badgeCaseStack != null ? BadgeCaseItem.BadgeCase.readFromItemStack(badgeCaseStack) : null;
+        if (badgeCase != null && badgeCase.isOwner(player)) {
+            int badgeCount = badgeCase.badges.size();
+            return getMaxLevel(badgeCount);
         }
         return getDefaultLevel();
     }
