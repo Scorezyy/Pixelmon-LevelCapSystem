@@ -4,8 +4,10 @@
 
 ## Features
 
-The mod checks how many badges the player has in their badge case and sets the corresponding level cap:
+The mod checks how many badges the player has in their badge case and sets the level cap
+Default Values:
 
+```
 - 1 Badge = Level 10
 - 2 Badges = Level 20
 - 3 Badges = Level 30
@@ -14,7 +16,7 @@ The mod checks how many badges the player has in their badge case and sets the c
 - 6 Badges = Level 60
 - 7 Badges = Level 70
 - 8 Badges = Level 100
-
+```
 This level cap applies to both catching and trading Pixelmon. When a Pixelmon reaches the level cap through leveling up, its level is stored, and once the player earns the next badge, the Pixelmon automatically levels up with the remaining experience points.
 
 ## To-Do
