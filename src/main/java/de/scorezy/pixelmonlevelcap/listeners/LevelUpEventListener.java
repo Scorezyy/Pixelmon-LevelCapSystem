@@ -35,7 +35,6 @@ public class LevelUpEventListener {
     }
 
     private ServerPlayerEntity findPlayerForPokemon(Pokemon pokemon) {
-        // Implementiere diese Methode nach Bedarf.
-        return null;
+        return null; //Platzhalter ;)
     }
 }
