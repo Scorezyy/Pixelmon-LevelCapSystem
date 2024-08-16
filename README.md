@@ -1,4 +1,5 @@
-﻿# Pixelmon-LevelCapSystem
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B011Y5SN) [![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) 
+# Pixelmon-LevelCapSystem
 
 **Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
 
