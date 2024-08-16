@@ -2,6 +2,7 @@ package de.scorezy.pixelmonlevelcap.listeners;
 
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
+import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
@@ -31,7 +32,8 @@ public class CaptureEventListener {
 
     private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
         event.setCanceled(true);
-        player.sendMessage(new StringTextComponent("§cDieses §ePokémon §cist zu stark für dich um es zu Fangen!"), player.getUUID());
+        String message = ConfigLoader.getCaptureBlockedMessage();
+        player.sendMessage(new StringTextComponent(message), player.getUUID());
     }
 
     private void returnBallToPlayer(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
