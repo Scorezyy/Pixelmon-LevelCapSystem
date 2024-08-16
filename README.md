@@ -2,7 +2,7 @@ Support me for more nice Projects :) <3
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B011Y5SN) 
 
-[![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) 
+[![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) ![Downloads](https://img.shields.io/github/downloads/Scorezyy/Pixelmon-LevelCapSystem/total.svg)
 # Pixelmon-LevelCapSystem
 
 **Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
