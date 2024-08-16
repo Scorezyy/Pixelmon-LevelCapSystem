@@ -1,12 +1,13 @@
 ﻿# Pixelmon-LevelCapSystem
 
-**Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
+**Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod. ♥️
 
 ## Features
 
-The mod checks how many badges the player has in their badge case and sets the level cap
+The mod enforces a level cap based on the number of badges a player has in their badge case. 
+This cap applies to both capturing wild/Raids Pixelmon and trading with other players.
 
-Default Values:
+Default Config Values:
 
 ```
 - 0 Badges = Level 10
@@ -19,9 +20,16 @@ Default Values:
 - 7 Badges = Level 80
 - 8 Badges = Level 100
 ```
-This level cap applies to both catching and trading Pixelmon. When a Pixelmon reaches the level cap through leveling up, its level is stored, and once the player earns the next badge, the Pixelmon automatically levels up with the remaining experience points.
 
-## To-Do
+When a Pixelmon reaches the level cap through leveling up, its level is stored. 
+After obtaining the next badge, the Pixelmon will continue to gain experience and level up automatically at the next opportunity.
 
-- Implement a configuration file that allows customization text messages.
-- ✅ The badge level can now be modified in the 'levelcap.properties'
+If a Pixelmon attempts to level up beyond the cap (e.g., using a Rare Candy), a message will appear in the chat indicating that the maximum level has been reached. 
+The Pixelmon's experience is preserved and applied once the player earns a new badge.
+
+## Configuration
+✅ All text messages and badge levels are fully customizable in the configuration file located at:
+``config/levelcap.yml``
+
+## TODO
+⚠️Implement a permission-based system to bypass badge requirements.
