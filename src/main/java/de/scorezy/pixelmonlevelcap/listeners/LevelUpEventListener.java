@@ -4,6 +4,7 @@ import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
 import com.pixelmonmod.pixelmon.api.events.ExperienceGainEvent;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
+import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +19,8 @@ public class LevelUpEventListener {
 
         if (pokemonLevel > maxLevel) {
             event.setCanceled(true);
-            player.sendMessage(new StringTextComponent("§cDieses Level ist zu hoch für dein Pokémon!"), player.getUUID());
+            String message = ConfigLoader.getLevelBlockedMessage();
+            player.sendMessage(new StringTextComponent(message), player.getUUID());
         }
     }
 
@@ -30,12 +32,13 @@ public class LevelUpEventListener {
 
         if (player != null && currentLevel >= maxLevel) {
             event.setExperience(0);
-            player.sendMessage(new StringTextComponent("§cDein §ePokémon §chat bereits das maximale Level erreicht"), player.getUUID());
+            String message = ConfigLoader.getMaxLevelReachedMessage();
+            player.sendMessage(new StringTextComponent(message), player.getUUID());
         }
     }
 
     private ServerPlayerEntity findPlayerForPokemon(Pokemon pokemon) {
-        // Implementiere diese Methode nach Bedarf.
+        //Platzhalter ;)
         return null;
     }
 }
