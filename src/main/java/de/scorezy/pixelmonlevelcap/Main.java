@@ -7,7 +7,6 @@ import de.scorezy.pixelmonlevelcap.listeners.*;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -18,18 +17,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class Main {
 
     public Main() {
-        // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
-        // Register the event handlers
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(FMLCommonSetupEvent event) {
-        // Load the config file
         ConfigLoader.loadConfig();
 
-        // Register the event listeners
         Pixelmon.EVENT_BUS.register(new CaptureEventListener());
         Pixelmon.EVENT_BUS.register(new TradeEventListener());
         Pixelmon.EVENT_BUS.register(new PlayerInteractListener());
