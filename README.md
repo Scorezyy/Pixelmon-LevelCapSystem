@@ -47,5 +47,4 @@ Default ConfigValues:
 
 
 ## TODO 📋
-- Implement a permission-based system to bypass badge requirements.
 - Implement a disable module to individually deactivate trading, catching, raids, and interactions.
