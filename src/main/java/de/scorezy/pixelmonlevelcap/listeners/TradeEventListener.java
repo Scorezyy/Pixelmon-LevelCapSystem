@@ -3,6 +3,7 @@ package de.scorezy.pixelmonlevelcap.listeners;
 import com.pixelmonmod.pixelmon.api.events.PixelmonTradeEvent;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
+import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,11 +18,13 @@ public class TradeEventListener {
 
         if (exceedsMaxLevel(event.getPokemon1(), player1)) {
             shouldCancel = true;
-            player1.sendMessage(new StringTextComponent("Du kannst dein Pokémon nicht tauschen, da es das erlaubte Level überschreitet!"), player1.getUUID());
+            String message = ConfigLoader.getTradeBlockedMessage();
+            player1.sendMessage(new StringTextComponent(message), player1.getUUID());
         }
         if (exceedsMaxLevel(event.getPokemon2(), player2)) {
             shouldCancel = true;
-            player2.sendMessage(new StringTextComponent("Du kannst dein Pokémon nicht tauschen, da es das erlaubte Level überschreitet!"), player2.getUUID());
+            String message = ConfigLoader.getTradeBlockedMessage();
+            player2.sendMessage(new StringTextComponent(message), player2.getUUID());
         }
 
         if (shouldCancel) {
