@@ -2,6 +2,7 @@ package de.scorezy.pixelmonlevelcap.listeners;
 
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
+import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,7 +17,8 @@ public class RaidCaptureEventListener {
 
         if (pokemonLevel > maxLevel) {
             event.setCanceled(true);
-            player.sendMessage(new StringTextComponent("§cDu kannst dieses Pokémon nicht fangen, da dein §eBadge-Level §cnicht ausreicht!"), player.getUUID());
+            String message = ConfigLoader.getRaidCaptureBlockedMessage();
+            player.sendMessage(new StringTextComponent(message), player.getUUID());
         }
     }
 }
