@@ -1,5 +1,3 @@
-SUPPORT FOR MORE PROJECTS!
-
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B011Y5SN) 
 
 [![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) 
