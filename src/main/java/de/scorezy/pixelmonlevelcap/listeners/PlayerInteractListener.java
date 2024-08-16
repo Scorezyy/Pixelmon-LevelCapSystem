@@ -2,6 +2,7 @@ package de.scorezy.pixelmonlevelcap.listeners;
 
 import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
+import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.StringTextComponent;
@@ -20,7 +21,8 @@ public class PlayerInteractListener {
             if (pokemonLevel > maxLevel) {
                 event.setCanceled(true);
                 event.setCancellationResult(ActionResultType.FAIL);
-                player.sendMessage(new StringTextComponent("§cDas Pokémon ist zu hoch für dich!"), player.getUUID());
+                String message = ConfigLoader.getRightClickBlockedMessage();
+                player.sendMessage(new StringTextComponent(message), player.getUUID());
             }
         }
     }
