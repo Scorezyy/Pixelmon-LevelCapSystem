@@ -32,3 +32,4 @@ public class BadgeUtils {
         return ConfigLoader.getBadgeLevel(0);
     }
 }
+
