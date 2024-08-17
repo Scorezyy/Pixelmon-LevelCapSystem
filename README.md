@@ -1,17 +1,26 @@
-﻿# Pixelmon-LevelCapSystem
+Support me for more nice Projects :) <3
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B011Y5SN) 
+
+[![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) ![Downloads](https://img.shields.io/github/downloads/Scorezyy/Pixelmon-LevelCapSystem/total.svg)
+![Forge](https://img.shields.io/badge/Forge-1.16.5--36.2.34-brightgreen.svg?colorB=26303d&logo=Conda-Forge) ![JDK](https://img.shields.io/badge/JDK-17.0.11-brightgreen.svg?colorB=469C00&logo=java)
+# Pixelmon-LevelCapSystem
 
 **Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
 
 ## Features 🗂️
 
-The mod enforces a level cap based on the number of badges a player has in their badge case. 
+- The mod enforces a level cap based on the number of badges a player has in their badge case. 
 his cap applies to both capturing wild Pixelmon and trading with other players.
 
-When a Pixelmon reaches the level cap through leveling up, its level is stored. 
+- When a Pixelmon reaches the level cap through leveling up, its level is stored. 
 After obtaining the next badge, the Pixelmon will continue to gain experience and level up automatically at the next opportunity.
 
-If a Pixelmon attempts to level up beyond the cap (e.g., using a Rare Candy), a message will appear in the chat indicating that the maximum level has been reached. 
+- If a Pixelmon attempts to level up beyond the cap (e.g., using a Rare Candy), a message will appear in the chat indicating that the maximum level has been reached. 
 The Pixelmon's experience is preserved and applied once the player earns a new badge.
+
+- For raid battles with other players, you can catch any raid Pokémon at any time. 
+For example, if it's a level 5 raid, the Pokémon you catch will be at your maximum badge level.
 
 ## Configuration
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
@@ -38,4 +47,4 @@ Default ConfigValues:
 
 
 ## TODO 📋
-- Implement a permission-based system to bypass badge requirements.
+- Implement a disable module to individually deactivate trading, catching, raids, and interactions.
