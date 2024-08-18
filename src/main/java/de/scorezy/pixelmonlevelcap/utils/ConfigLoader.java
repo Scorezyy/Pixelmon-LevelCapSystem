@@ -4,12 +4,13 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class ConfigLoader {
             createDefaultConfig(configFile);
         }
 
-        try (FileReader reader = new FileReader(configFile, StandardCharsets.UTF_8)) {
+        try (BufferedReader reader = Files.newBufferedReader(configFile.toPath(), StandardCharsets.UTF_8)) {
             Yaml yaml = new Yaml();
             configData.putAll(yaml.load(reader));
         } catch (IOException e) {
@@ -117,7 +118,6 @@ public class ConfigLoader {
         Map<String, String> messages = (Map<String, String>) configData.get("messages");
         return messages != null ? messages.getOrDefault(key, defaultMessage) : defaultMessage;
     }
-
 
     private static String formatMessage(String message) {
         return translateAlternateColorCodes(message);

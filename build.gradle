@@ -2,8 +2,8 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
-
 
 group = mod_group_id
 version = mod_version
@@ -13,7 +13,31 @@ base {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    toolchain.languageVersion = JavaLanguageVersion.of(8)
+}
+
+configurations {
+    shadowImplementation {
+        canBeResolved = true
+        canBeConsumed = false
+        extendsFrom configurations.implementation
+    }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    mergeServiceFiles()
+    zip64 true
+
+    configurations = [project.configurations.shadowImplementation]
+
+    dependencies {
+        include(dependency('org.yaml:snakeyaml'))
+    }
+}
+
+jar {
+    dependsOn shadowJar
 }
 
 minecraft {
@@ -44,15 +68,11 @@ minecraft {
         }
     }
 }
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
-    maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
-    maven { url = "https://repo.lucko.me/" }
-    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
-    maven { url = "https://jitpack.io" }
-    maven { url = "https://repo.spongepowered.org/maven" }
     maven { url = 'https://maven.minecraftforge.net/' }
     ivy {
         setUrl('https://download.nodecdn.net/containers/reforged/server/release')
@@ -81,9 +101,8 @@ task versionedRelease(type: Copy) {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/Pixelmon-1.16.5-9.1.12-universal.jar')
-    implementation 'org.yaml:snakeyaml:1.30'
+    compileOnly files('libs/Pixelmon-1.16.5-9.1.12-universal.jar')
+    implementation 'org.yaml:snakeyaml:1.29'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -101,7 +120,6 @@ tasks.named('processResources', ProcessResources).configure {
         expand replaceProperties + [project: project]
     }
 }
-
 
 tasks.named('jar', Jar).configure {
     manifest {
