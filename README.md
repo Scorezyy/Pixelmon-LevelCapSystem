@@ -4,7 +4,8 @@ Support me for more nice Projects :) <3
 
 [![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) ![Downloads](https://img.shields.io/github/downloads/Scorezyy/Pixelmon-LevelCapSystem/total.svg)
 ![Forge](https://img.shields.io/badge/Forge-1.16.5--36.2.34-brightgreen.svg?colorB=26303d&logo=Conda-Forge) ![JDK](https://img.shields.io/badge/JDK-17-brightgreen.svg?colorB=469C00&logo=java) 
-![Pixelmon](https://img.shields.io/badge/Pixelmon-9.1.12-brightgreen.svg?colorB=880808&logo=java) ![JDK](https://img.shields.io/badge/JDK-8-brightgreen.svg?colorB=469C00&logo=java)
+![JDK](https://img.shields.io/badge/JDK-8-brightgreen.svg?colorB=469C00&logo=java)
+![Pixelmon](https://img.shields.io/badge/Pixelmon-9.1.12-brightgreen.svg?colorB=880808&logo=java)
 
 # Pixelmon-LevelCapSystem
 
