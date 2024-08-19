@@ -8,20 +8,29 @@ import net.minecraft.item.ItemStack;
 public class BadgeUtils {
 
     public static ItemStack findBadgeCaseItemStack(ServerPlayerEntity player) {
+        if (player == null || player.inventory == null) {
+            return null;
+        }
+
         return player.inventory.items.stream()
-                .filter(stack -> stack.getItem() instanceof BadgeCaseItem)
+                .filter(stack -> stack != null && stack.getItem() instanceof BadgeCaseItem)
                 .findFirst()
                 .orElse(null);
     }
 
     public static int getMaxLevelForPlayer(ServerPlayerEntity player) {
         ItemStack badgeCaseStack = findBadgeCaseItemStack(player);
-        BadgeCase badgeCase = badgeCaseStack != null ? BadgeCaseItem.BadgeCase.readFromItemStack(badgeCaseStack) : null;
+        if (badgeCaseStack == null) {
+            return getDefaultLevel();
+        }
+
+        BadgeCase badgeCase = BadgeCaseItem.BadgeCase.readFromItemStack(badgeCaseStack);
         if (badgeCase != null && badgeCase.isOwner(player)) {
             int badgeCount = badgeCase.badges.size();
             return getMaxLevel(badgeCount);
+        } else {
+            return getDefaultLevel();
         }
-        return getDefaultLevel();
     }
 
     private static int getMaxLevel(int badgeCount) {
@@ -32,4 +41,3 @@ public class BadgeUtils {
         return ConfigLoader.getBadgeLevel(0);
     }
 }
-
