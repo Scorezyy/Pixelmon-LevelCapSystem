@@ -3,7 +3,10 @@ Support me for more nice Projects :) <3
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B011Y5SN) 
 
 [![Discord](https://img.shields.io/discord/800383201599553597)](https://discord.gg/j3gz7sFUje) ![Downloads](https://img.shields.io/github/downloads/Scorezyy/Pixelmon-LevelCapSystem/total.svg)
-![Forge](https://img.shields.io/badge/Forge-1.16.5--36.2.34-brightgreen.svg?colorB=26303d&logo=Conda-Forge) ![JDK](https://img.shields.io/badge/JDK-17.0.11-brightgreen.svg?colorB=469C00&logo=java)
+![Forge](https://img.shields.io/badge/Forge-1.16.5--36.2.34-brightgreen.svg?colorB=26303d&logo=Conda-Forge) ![JDK](https://img.shields.io/badge/JDK-17-brightgreen.svg?colorB=469C00&logo=java) 
+![JDK](https://img.shields.io/badge/JDK-8-brightgreen.svg?colorB=469C00&logo=java)
+![Pixelmon](https://img.shields.io/badge/Pixelmon-9.1.12-brightgreen.svg?colorB=880808&logo=java)
+
 # Pixelmon-LevelCapSystem
 
 **Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
@@ -44,6 +47,7 @@ Default ConfigValues:
 - Minecraft: 1.16.5
 - Forge: 36.2.34
 - Pixelmon: 9.1.12
+- 1.3 Java 17 1.4 Java 8
 
 
 ## TODO 📋
