@@ -20,13 +20,12 @@ public class ConfigLoader {
     private static final String CONFIG_FILE_NAME = "levelcap.yml";
     private static final String[] DEFAULT_LEVELS = {"10", "20", "30", "40", "50", "60", "70", "80", "100"};
 
-    private static final String DEFAULT_LEVEL_BLOCKED_MESSAGE = "&cDieses Level ist zu hoch für dein Pokémon!";
-    private static final String DEFAULT_RAID_BLOCKED_MESSAGE = "&cDu kannst dieses Pokémon nicht fangen, da dein §eBadge-Level &cnicht ausreicht!";
-    private static final String DEFAULT_MAX_LEVEL_REACHED_MESSAGE = "&cDein &ePokémon &chat bereits das maximale Level erreicht";
-    private static final String DEFAULT_CAPTURE_BLOCKED_MESSAGE = "&cDieses &ePokémon &cist zu stark für dich um es zu fangen!";
-    private static final String DEFAULT_INTERACT_BLOCKED_MESSAGE = "&cDas Pokémon ist zu hoch für dich!";
-    private static final String DEFAULT_TRADE_BLOCKED_MESSAGE = "&cDu kannst dein Pokémon nicht tauschen, da es das erlaubte Level überschreitet!";
-    private static final String DEFAULT_CONFIG_LOADED = "&aConfig wurde Erfolgreich neu geladen!";
+    private static final String DEFAULT_LEVEL_BLOCKED_MESSAGE = "&cThis level is too high for your Pokémon!";
+    private static final String DEFAULT_MAX_LEVEL_REACHED_MESSAGE = "&cYour &ePokémon &chas already reached the maximum level";
+    private static final String DEFAULT_CAPTURE_BLOCKED_MESSAGE = "&cThis &ePokémon &cis too strong for you to catch!";
+    private static final String DEFAULT_INTERACT_BLOCKED_MESSAGE = "&cThe Pokémon is too high level for you!";
+    private static final String DEFAULT_TRADE_BLOCKED_MESSAGE = "&cYou cannot trade your Pokémon because it exceeds the allowed level!";
+    private static final String DEFAULT_CONFIG_LOADED = "&aConfig has been successfully reloaded!";
 
     private static final Map<String, Object> configData = new HashMap<>();
 
@@ -76,7 +75,6 @@ public class ConfigLoader {
 
     private static Map<String, String> createMessages() {
         Map<String, String> messages = new HashMap<>();
-        messages.put("raid_blocked", DEFAULT_RAID_BLOCKED_MESSAGE);
         messages.put("interact_blocked", DEFAULT_INTERACT_BLOCKED_MESSAGE);
         messages.put("capture_blocked", DEFAULT_CAPTURE_BLOCKED_MESSAGE);
         messages.put("level_blocked", DEFAULT_LEVEL_BLOCKED_MESSAGE);
@@ -88,10 +86,6 @@ public class ConfigLoader {
 
     public static String getLevelBlockedMessage() {
         return formatMessage(getMessage("level_blocked", DEFAULT_LEVEL_BLOCKED_MESSAGE));
-    }
-
-    public static String getRaidCaptureBlockedMessage() {
-        return formatMessage(getMessage("raid_blocked", DEFAULT_RAID_BLOCKED_MESSAGE));
     }
 
     public static String getMaxLevelReachedMessage() {
