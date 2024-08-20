@@ -56,7 +56,6 @@ messages:
 - Minecraft: 1.16.5
 - Forge: 36.2.34
 - Pixelmon: 9.1.12
-- 1.3 Java 17 1.4 Java 8
 
 
 ## TODO 📋
