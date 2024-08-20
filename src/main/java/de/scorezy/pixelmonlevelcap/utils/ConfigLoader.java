@@ -25,6 +25,7 @@ public class ConfigLoader {
     private static final String DEFAULT_CAPTURE_BLOCKED_MESSAGE = "&cThis &ePokémon &cis too strong for you to catch!";
     private static final String DEFAULT_INTERACT_BLOCKED_MESSAGE = "&cThe Pokémon is too high level for you!";
     private static final String DEFAULT_TRADE_BLOCKED_MESSAGE = "&cYou cannot trade your Pokémon because it exceeds the allowed level!";
+    private static final String DEFAULT_NPCTRADE_ACCESS_MESSAGE = "&aThe level of the traded Pokémon has been adjusted to match your badge level!";
     private static final String DEFAULT_CONFIG_LOADED = "&aConfig has been successfully reloaded!";
 
     private static final Map<String, Object> configData = new HashMap<>();
@@ -80,6 +81,7 @@ public class ConfigLoader {
         messages.put("level_blocked", DEFAULT_LEVEL_BLOCKED_MESSAGE);
         messages.put("max_level_reached", DEFAULT_MAX_LEVEL_REACHED_MESSAGE);
         messages.put("trade_blocked", DEFAULT_TRADE_BLOCKED_MESSAGE);
+        messages.put("npcTrade_access_message", DEFAULT_NPCTRADE_ACCESS_MESSAGE);
         messages.put("config_reloaded", DEFAULT_CONFIG_LOADED);
         return messages;
     }
@@ -104,8 +106,12 @@ public class ConfigLoader {
         return formatMessage(getMessage("trade_blocked", DEFAULT_TRADE_BLOCKED_MESSAGE));
     }
 
+    public static String getNPCTradeAccessMessage() {
+        return formatMessage(getMessage("trade_access_message", DEFAULT_NPCTRADE_ACCESS_MESSAGE));
+    }
+
     public static String getDefaultConfigLoaded() {
-        return formatMessage(getMessage("config_reloaded", DEFAULT_TRADE_BLOCKED_MESSAGE));
+        return formatMessage(getMessage("config_reloaded", DEFAULT_CONFIG_LOADED));
     }
 
     private static String getMessage(String key, String defaultMessage) {
