@@ -23,7 +23,7 @@ After obtaining the next badge, the Pixelmon will continue to gain experience an
 The Pixelmon's experience is preserved and applied once the player earns a new badge.
 
 - For Pokémon received from NPC trades, the Pokémon's level will automatically adjust to match your maximum badge level.
-- For example, if your highest badge allows you to control level 20 Pokémon, the traded Pokémon will be adjusted to level 20.
+For example, if your highest badge allows you to control level 20 Pokémon, the traded Pokémon will be adjusted to level 20.
 
 ## Configuration
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
