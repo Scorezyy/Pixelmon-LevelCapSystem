@@ -9,7 +9,7 @@ Support me for more nice Projects :) <3
 
 # Pixelmon-LevelCapSystem
 
-**Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
+**Pixelmon-LevelCapSystem** is a Server-Client Forge mod that adds a level cap to the Pixelmon mod.
 
 ## Features 🗂️
 
