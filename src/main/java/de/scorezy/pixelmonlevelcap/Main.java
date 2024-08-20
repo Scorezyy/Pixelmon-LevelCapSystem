@@ -30,6 +30,7 @@ public class Main {
         Pixelmon.EVENT_BUS.register(new PlayerInteractListener());
         Pixelmon.EVENT_BUS.register(new LevelUpEventListener());
         Pixelmon.EVENT_BUS.register(new RaidCaptureEventListener());
+        Pixelmon.EVENT_BUS.register(new NPCTradeEventListener());
     }
     @Mod.EventBusSubscriber(modid = "pixelmonlevelcap", bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ServerEvents {
