@@ -29,18 +29,27 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
 `config/levelcap.yml`
 
-Default ConfigValues:
+Default Config::
 
 ```
-- 0 Badges = Level 10
-- 1 Badges = Level 20
-- 2 Badges = Level 30
-- 3 Badges = Level 40
-- 4 Badges = Level 50
-- 5 Badges = Level 60
-- 6 Badges = Level 70
-- 7 Badges = Level 80
-- 8 Badges = Level 100
+badge_levels:
+  badge.level.0: '10'
+  badge.level.2: '30'
+  badge.level.1: '20'
+  badge.level.4: '50'
+  badge.level.3: '40'
+  badge.level.6: '70'
+  badge.level.5: '60'
+  badge.level.8: '100'
+  badge.level.7: '80'
+messages:
+  interact_blocked: '&cThe Pokémon is too high level for you!'
+  capture_blocked: '&cThis &ePokémon &cis too strong for you to catch!'
+  level_blocked: '&cThis level is too high for your Pokémon!'
+  max_level_reached: '&cYour &ePokémon &chas already reached the maximum level'
+  trade_blocked: '&cYou cannot trade your Pokémon because it exceeds the allowed level!'
+  npcTrade_access_message: "&aThe level of the traded Pokémon has been adjusted to match your badge level!";
+  config_reloaded: '&aConfig has been successfully reloaded!'
 ```
 
 ## Versions 🌌
