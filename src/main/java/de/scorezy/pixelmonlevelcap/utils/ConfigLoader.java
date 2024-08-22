@@ -1,8 +1,9 @@
 package de.scorezy.pixelmonlevelcap.utils;
 
+import info.pixelmon.repack.yaml.snakeyaml.DumperOptions;
+import info.pixelmon.repack.yaml.snakeyaml.Yaml;
+
 import net.minecraftforge.fml.loading.FMLPaths;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.BufferedReader;
 import java.io.File;
