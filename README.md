@@ -34,14 +34,15 @@ Default Config::
 ```
 badge_levels:
   badge.level.0: '10'
-  badge.level.2: '30'
   badge.level.1: '20'
-  badge.level.4: '50'
+  badge.level.2: '30'
   badge.level.3: '40'
-  badge.level.6: '70'
+  badge.level.4: '50'
   badge.level.5: '60'
-  badge.level.8: '100'
+  badge.level.6: '70'
   badge.level.7: '80'
+  badge.level.8: '100'
+
 messages:
   interact_blocked: '&cThe Pokémon is too high level for you!'
   capture_blocked: '&cThis &ePokémon &cis too strong for you to catch!'
