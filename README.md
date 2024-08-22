@@ -13,17 +13,24 @@ Support me for more nice Projects :) <3
 
 ## Features 🗂️
 
+# 🔒 Capture:
 - The mod enforces a level cap based on the number of badges a player has in their badge case. 
 his cap applies to both capturing wild Pixelmon and trading with other players.
 
+# 🎮 Leveling:
 - When a Pixelmon reaches the level cap through leveling up, its level is stored. 
 After obtaining the next badge, the Pixelmon will continue to gain experience and level up automatically at the next opportunity.
 
+# 📈 Level-Items:
 - If a Pixelmon attempts to level up beyond the cap (e.g., using a Rare Candy), a message will appear in the chat indicating that the maximum level has been reached. 
 The Pixelmon's experience is preserved and applied once the player earns a new badge.
 
+# 👨‍👨‍👦 Trades:
 - For Pokémon received from NPC trades, the Pokémon's level will automatically adjust to match your maximum badge level.
 For example, if your highest badge allows you to control level 20 Pokémon, the traded Pokémon will be adjusted to level 20.
+
+# ⚔️ Raids:
+- Additionally, when you catch a Raid Pokémon, its level will automatically adjust to match your current badge level.
 
 ## Configuration
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
