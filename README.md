@@ -48,7 +48,7 @@ messages:
   level_blocked: '&cThis level is too high for your Pokémon!'
   max_level_reached: '&cYour &ePokémon &chas already reached the maximum level'
   trade_blocked: '&cYou cannot trade your Pokémon because it exceeds the allowed level!'
-  npcTrade_access_message: "&aThe level of the traded Pokémon has been adjusted to match your badge level!";
+  npcTrade_access_message: "&aThe level of the traded Pokémon has been adjusted to match your badge level!"
   config_reloaded: '&aConfig has been successfully reloaded!'
 ```
 
