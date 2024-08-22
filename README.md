@@ -9,7 +9,7 @@ Support me for more nice Projects :) <3
 
 # Pixelmon-LevelCapSystem
 
-**Pixelmon-LevelCapSystem** is a server-side Forge mod that adds a level cap to the Pixelmon mod.
+**Pixelmon-LevelCapSystem** is a Server-Client Forge mod that adds a level cap to the Pixelmon mod.
 
 ## Features 🗂️
 
@@ -22,32 +22,41 @@ After obtaining the next badge, the Pixelmon will continue to gain experience an
 - If a Pixelmon attempts to level up beyond the cap (e.g., using a Rare Candy), a message will appear in the chat indicating that the maximum level has been reached. 
 The Pixelmon's experience is preserved and applied once the player earns a new badge.
 
-- For raid battles with other players, you can catch any raid Pokémon at any time. 
-For example, if it's a level 5 raid, the Pokémon you catch will be at your maximum badge level.
+- For Pokémon received from NPC trades, the Pokémon's level will automatically adjust to match your maximum badge level.
+For example, if your highest badge allows you to control level 20 Pokémon, the traded Pokémon will be adjusted to level 20.
 
 ## Configuration
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
 `config/levelcap.yml`
 
-Default ConfigValues:
+Default Config::
 
 ```
-- 0 Badges = Level 10
-- 1 Badges = Level 20
-- 2 Badges = Level 30
-- 3 Badges = Level 40
-- 4 Badges = Level 50
-- 5 Badges = Level 60
-- 6 Badges = Level 70
-- 7 Badges = Level 80
-- 8 Badges = Level 100
+badge_levels:
+  badge.level.0: '10'
+  badge.level.1: '20'
+  badge.level.2: '30'
+  badge.level.3: '40'
+  badge.level.4: '50'
+  badge.level.5: '60'
+  badge.level.6: '70'
+  badge.level.7: '80'
+  badge.level.8: '100'
+
+messages:
+  interact_blocked: '&cThe Pokémon is too high level for you!'
+  capture_blocked: '&cThis &ePokémon &cis too strong for you to catch!'
+  level_blocked: '&cThis level is too high for your Pokémon!'
+  max_level_reached: '&cYour &ePokémon &chas already reached the maximum level'
+  trade_blocked: '&cYou cannot trade your Pokémon because it exceeds the allowed level!'
+  npcTrade_access_message: "&aThe level of the traded Pokémon has been adjusted to match your badge level!"
+  config_reloaded: '&aConfig has been successfully reloaded!'
 ```
 
 ## Versions 🌌
 - Minecraft: 1.16.5
 - Forge: 36.2.34
 - Pixelmon: 9.1.12
-- 1.3 Java 17 1.4 Java 8
 
 
 ## TODO 📋
