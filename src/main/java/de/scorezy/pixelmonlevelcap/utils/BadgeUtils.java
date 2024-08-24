@@ -52,6 +52,7 @@ public class BadgeUtils {
      */
     private static int getBadgeLevel(int badgeCount) {
         List<? extends Integer> cappedLevels = PLCConfig.COMMON.cappedLevels.get();
-        return cappedLevels.get(MathHelper.clamp(badgeCount, 0, cappedLevels.size() - 1));
+        return !cappedLevels.isEmpty() ?
+                cappedLevels.get(MathHelper.clamp(badgeCount, 0, cappedLevels.size() - 1)) : 100;
     }
 }
