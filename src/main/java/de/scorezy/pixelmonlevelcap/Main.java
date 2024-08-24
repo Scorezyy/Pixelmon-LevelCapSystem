@@ -2,7 +2,9 @@ package de.scorezy.pixelmonlevelcap;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.pixelmonmod.pixelmon.Pixelmon;
-import de.scorezy.pixelmonlevelcap.commands.ReloadConfigCommand;
+import de.scorezy.pixelmonlevelcap.commands.ReloadCmd;
+import de.scorezy.pixelmonlevelcap.config.PLCConfig;
+import de.scorezy.pixelmonlevelcap.lib.Reference;
 import de.scorezy.pixelmonlevelcap.listeners.*;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.command.CommandSource;
@@ -13,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("pixelmonlevelcap")
+@Mod(Reference.MOD_ID)
 public class Main {
 
     public Main() {
@@ -23,7 +25,8 @@ public class Main {
     }
 
     private void setup(FMLCommonSetupEvent event) {
-        ConfigLoader.loadConfig();
+//        ConfigLoader.loadConfig();
+        PLCConfig.setup();
 
         Pixelmon.EVENT_BUS.register(new CaptureEventListener());
         Pixelmon.EVENT_BUS.register(new TradeEventListener());
@@ -32,12 +35,13 @@ public class Main {
         Pixelmon.EVENT_BUS.register(new RaidCaptureEventListener());
         Pixelmon.EVENT_BUS.register(new NPCTradeEventListener());
     }
-    @Mod.EventBusSubscriber(modid = "pixelmonlevelcap", bus = Mod.EventBusSubscriber.Bus.FORGE)
+
+    @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ServerEvents {
         @SubscribeEvent
         public static void onServerStarting(FMLServerStartedEvent event) {
             CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommands().getDispatcher();
-            ReloadConfigCommand.register(dispatcher);
+            ReloadCmd.register(dispatcher);
         }
     }
 }

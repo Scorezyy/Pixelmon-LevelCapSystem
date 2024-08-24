@@ -11,7 +11,7 @@ public class RaidCaptureEventListener {
     public void onStartRaidCapture(CaptureEvent.StartRaidCapture event) {
         ServerPlayerEntity player = event.getPlayer();
         int pokemonLevel = event.getRaidPokemon().getPokemonLevel();
-        int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
+        int maxLevel = BadgeUtils.getLevelCapForPlayer(player);
 
         if (pokemonLevel > maxLevel) {
             event.getRaidPokemon().setLevel(maxLevel);

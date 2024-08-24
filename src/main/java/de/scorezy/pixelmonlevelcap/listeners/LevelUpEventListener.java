@@ -4,9 +4,7 @@ import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
 import com.pixelmonmod.pixelmon.api.events.ExperienceGainEvent;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -18,7 +16,7 @@ public class LevelUpEventListener {
     public void onPokemonLevelUp(LevelUpEvent.Pre event) {
         Optional.ofNullable(event.getPlayer()).ifPresent(serverPlayer -> {
             int pokemonLevel = event.getAfterLevel();
-            int maxLevel = BadgeUtils.getMaxLevelForPlayer(serverPlayer);
+            int maxLevel = BadgeUtils.getLevelCapForPlayer(serverPlayer);
 
             if (pokemonLevel > maxLevel) {
                 event.setCanceled(true);
@@ -33,7 +31,7 @@ public class LevelUpEventListener {
     public void onExperienceGain(ExperienceGainEvent event) {
         Optional.ofNullable(findPlayerForPokemon(event.pokemon.getPokemon())).ifPresent(serverPlayer -> {
             int currentLevel = event.pokemon.getPokemonLevel();
-            int maxLevel = BadgeUtils.getMaxLevelForPlayer(serverPlayer);
+            int maxLevel = BadgeUtils.getLevelCapForPlayer(serverPlayer);
 
             if (currentLevel >= maxLevel) {
                 event.setExperience(0);

@@ -1,0 +1,20 @@
+{
+  "pixelmonlevelcap.capped_msg.level_blocked": "§cThis level is too high for your §ePokémon§c!",
+  "pixelmonlevelcap.capped_msg.max_level_reached": "§cYour §ePokémon §chas already reached the maximum level",
+  "pixelmonlevelcap.capped_msg.capture_blocked": "§cThis §ePokémon §cis too strong for you to catch!",
+  "pixelmonlevelcap.capped_msg.interact_blocked": "§cThis §ePokémon §cis too high level for you!",
+  "pixelmonlevelcap.capped_msg.trade_blocked": "§cYou cannot trade your §ePokémon §cbecause it exceeds the allowed level!",
+  "pixelmonlevelcap.capped_msg.npc_trade_access": "§cThe level of the traded §ePokémon §chas been adjusted to match your badge level!",
+
+  "pixelmonlevelcap.disobey_msg.not_attack_1": "%s 正在四处闲逛！",
+  "pixelmonlevelcap.disobey_msg.not_attack_2": "%s 扭头离开了！",
+  "pixelmonlevelcap.disobey_msg.not_attack_3": "%s 不听话！",
+  "pixelmonlevelcap.disobey_msg.not_attack_4": "%s 假装没有听到！",
+  "pixelmonlevelcap.disobey_msg.nap": "%s 开始打盹了！",
+  "pixelmonlevelcap.disobey_msg.confusion": "%s 不听话！在混乱中误伤了自己！",
+  "pixelmonlevelcap.disobey_msg.asleep_action_1": "%s 无视命令…睡觉了！",
+  "pixelmonlevelcap.disobey_msg.asleep_action_2": "%s 在睡觉时无视了命令！",
+  "pixelmonlevelcap.disobey_msg.asleep_action_3": "%s 无视命令继续睡觉了！",
+
+  "pixelmonlevelcap.config_msg.reload": "§a配置文件重载成功！"
+}
