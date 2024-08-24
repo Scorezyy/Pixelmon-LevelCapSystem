@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class ConfigLoader {
 
     private static final String CONFIG_FILE_NAME = "levelcap.yml";
@@ -60,7 +61,7 @@ public class ConfigLoader {
 
         Yaml yaml = new Yaml(options);
 
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(configFile), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(configFile.toPath()), StandardCharsets.UTF_8)) {
             yaml.dump(yamlData, writer);
         } catch (IOException e) {
             e.printStackTrace();

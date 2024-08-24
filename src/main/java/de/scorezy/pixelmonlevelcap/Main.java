@@ -6,7 +6,6 @@ import de.scorezy.pixelmonlevelcap.commands.ReloadCmd;
 import de.scorezy.pixelmonlevelcap.config.PLCConfig;
 import de.scorezy.pixelmonlevelcap.lib.Reference;
 import de.scorezy.pixelmonlevelcap.listeners.*;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
