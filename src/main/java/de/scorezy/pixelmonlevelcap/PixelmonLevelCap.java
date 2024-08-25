@@ -20,22 +20,22 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 @Mod(Reference.MOD_ID)
-public class Main {
-    private static Main INSTANCE;
+public class PixelmonLevelCap {
+    private static PixelmonLevelCap INSTANCE;
 
     public static final Logger LOGGER = LogManager.getLogger();
 
     private PLCConfig config;
 
-    public Main() {
+    public PixelmonLevelCap() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static Main getInstance() {
+    public static PixelmonLevelCap getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new Main();
+            INSTANCE = new PixelmonLevelCap();
         }
         return INSTANCE;
     }
