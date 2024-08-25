@@ -1,10 +1,10 @@
 {
-  "pixelmonlevelcap.capped_msg.level_blocked": "§cThis level is too high for your §ePokémon§c!",
-  "pixelmonlevelcap.capped_msg.max_level_reached": "§cYour §ePokémon §chas already reached the maximum level",
-  "pixelmonlevelcap.capped_msg.capture_blocked": "§cThis §ePokémon §cis too strong for you to catch!",
-  "pixelmonlevelcap.capped_msg.interact_blocked": "§cThis §ePokémon §cis too high level for you!",
-  "pixelmonlevelcap.capped_msg.trade_blocked": "§cYou cannot trade your §ePokémon §cbecause it exceeds the allowed level!",
-  "pixelmonlevelcap.capped_msg.npc_trade_access": "§cThe level of the traded §ePokémon §chas been adjusted to match your badge level!",
+  "pixelmonlevelcap.capped_msg.level_blocked": "§c该等级对于你的§e宝可梦§c来说太高了！",
+  "pixelmonlevelcap.capped_msg.max_level_reached": "§c你的§e宝可梦§c已经达到了最高等级",
+  "pixelmonlevelcap.capped_msg.capture_blocked": "§c这只§e宝可梦§c过于强大了，你无法捕捉到！",
+  "pixelmonlevelcap.capped_msg.interact_blocked": "§c这只§e宝可梦§c的等级对你来说太高了！",
+  "pixelmonlevelcap.capped_msg.trade_blocked": "§c无法交换这只§e宝可梦§c，因为它超过了允许的等级！",
+  "pixelmonlevelcap.capped_msg.npc_trade_access": "§c交换来的§e宝可梦§c的等级已调整为匹配您徽章的等级！",
 
   "pixelmonlevelcap.disobey_msg.not_attack_1": "%s 正在四处闲逛！",
   "pixelmonlevelcap.disobey_msg.not_attack_2": "%s 扭头离开了！",
