@@ -2,10 +2,9 @@ package de.scorezy.pixelmonlevelcap.listeners;
 
 import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -16,13 +15,14 @@ public class PlayerInteractListener {
         if (event.getTarget() instanceof PixelmonEntity) {
             ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
             int pokemonLevel = ((PixelmonEntity) event.getTarget()).getLvl().getPokemonLevel();
-            int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
+            int maxLevel = BadgeUtils.getLevelCapForPlayer(player);
 
             if (pokemonLevel > maxLevel) {
                 event.setCanceled(true);
                 event.setCancellationResult(ActionResultType.FAIL);
-                String message = ConfigLoader.getRightClickBlockedMessage();
-                player.sendMessage(new StringTextComponent(message), player.getUUID());
+                player.sendMessage(
+                        new TranslationTextComponent("pixelmonlevelcap.capped_msg.interact_blocked"),
+                        player.getUUID());
             }
         }
     }

@@ -58,31 +58,42 @@ sourceSets {
 repositories {
     mavenCentral()
     maven { url = 'https://maven.minecraftforge.net/' }
+	// Add cf repo so gradle can download things from there
+    maven {
+        url 'https://www.cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    implementation files('libs/Pixelmon-1.16.5-9.1.12-universal.jar')
-    implementation 'org.yaml:snakeyaml:1.30'
+	
+	// Using the local Pixelmon mod does not allow us to view the deobfuscated method
+	// so we can use the Pixelmon on curseforge, whose version number is the URL suffix:
+	implementation fg.deobf("curse.maven:pixelmon-389487:${pixelmon_version_in_cf}")
+    // implementation files('libs/Pixelmon-1.16.5-9.1.12-universal.jar')
+	
+    // implementation 'org.yaml:snakeyaml:1.30'
 }
 
-configurations {
-    implementation.exclude group: 'org.yaml', module: 'snakeyaml'
-}
 
-task versionedRelease(type: Copy) {
-    dependsOn('shadowJar')
-    delete fileTree('../release/') {
-        include '**/*.jar'
-    }
-    group "build"
-    from("./build/libs/${rootProject.name}-Forge-${version}.jar")
-    into('../release/')
-    include '*.jar'
-    rename { String filename ->
-        filename.replace("-${version}.jar", "-${project.version}-${forgeVersion}.jar")
-    }
-}
+//configurations {
+//    implementation.exclude group: 'org.yaml', module: 'snakeyaml'
+//}
+
+// This is a task that Daniel uses to publish his mod,
+// but we can use the `build` task directly
+//task versionedRelease(type: Copy) {
+//    delete fileTree('./release/') {
+//        include '**/*.jar'
+//    }
+//    group "build"
+//    from("./build/libs/${mod_name}-Forge-${mod_version}.jar")
+//    into('./release/')
+//    include '*.jar'
+//}
 
 tasks.named('processResources', ProcessResources).configure {
     def replaceProperties = [
@@ -91,6 +102,7 @@ tasks.named('processResources', ProcessResources).configure {
             forge_version             : forge_version,
             forge_version_range       : forge_version_range,
             loader_version_range      : loader_version_range,
+            pixelmon_version_range    : pixelmon_version_range,
             mod_id                    : mod_id,
             mod_name                  : mod_name,
             mod_license               : mod_license,

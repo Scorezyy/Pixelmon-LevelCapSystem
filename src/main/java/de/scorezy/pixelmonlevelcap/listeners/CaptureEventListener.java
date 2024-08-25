@@ -2,10 +2,9 @@ package de.scorezy.pixelmonlevelcap.listeners;
 
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CaptureEventListener {
@@ -14,7 +13,7 @@ public class CaptureEventListener {
     public void blockViaCaptureAttempt(CaptureEvent.StartCapture event) {
         ServerPlayerEntity player = event.getPlayer();
         int pokemonLevel = event.getPokemon().getLvl().getPokemonLevel();
-        int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
+        int maxLevel = BadgeUtils.getLevelCapForPlayer(player);
 
         if (isCaptureBlocked(pokemonLevel, maxLevel)) {
             handleCaptureRestriction(event, player);
@@ -32,8 +31,8 @@ public class CaptureEventListener {
 
     private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
         event.setCanceled(true);
-        String message = ConfigLoader.getCaptureBlockedMessage();
-        player.sendMessage(new StringTextComponent(message), player.getUUID());
+        player.sendMessage(new TranslationTextComponent("pixelmonlevelcap.capped_msg.capture_blocked"),
+                player.getUUID());
     }
 
     private void returnBallToPlayer(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
