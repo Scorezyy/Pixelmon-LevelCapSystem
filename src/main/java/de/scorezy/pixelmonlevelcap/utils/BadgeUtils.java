@@ -45,7 +45,8 @@ public class BadgeUtils {
     }
 
     /**
-     * Calculate the pokemon level cap corresponding to the badge count
+     * Calculate the pokemon level cap corresponding to the badge count<br>
+     * No restrictions (i.e., level 100) if the corresponding config entry is empty
      *
      * @param badgeCount the count of badges
      * @return corresponding pokemon level cap
