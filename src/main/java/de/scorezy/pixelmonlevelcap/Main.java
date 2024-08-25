@@ -2,8 +2,9 @@ package de.scorezy.pixelmonlevelcap;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.pixelmonmod.pixelmon.Pixelmon;
+import com.pixelmonmod.pixelmon.api.config.api.yaml.YamlConfigFactory;
 import de.scorezy.pixelmonlevelcap.commands.ReloadCmd;
-import de.scorezy.pixelmonlevelcap.config.PLCConfig;
+import de.scorezy.pixelmonlevelcap.config.YmlConfig;
 import de.scorezy.pixelmonlevelcap.lib.Reference;
 import de.scorezy.pixelmonlevelcap.listeners.*;
 import net.minecraft.command.CommandSource;
@@ -16,10 +17,15 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+
 @Mod(Reference.MOD_ID)
 public class Main {
+    private static Main INSTANCE;
 
     public static final Logger LOGGER = LogManager.getLogger();
+
+    private YmlConfig config;
 
     public Main() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -27,9 +33,17 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    public static Main getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Main();
+        }
+        return INSTANCE;
+    }
+
     private void setup(FMLCommonSetupEvent event) {
 //        ConfigLoader.loadConfig();
-        PLCConfig.setup();
+//        PLCConfig.setup();
+        loadConfigs();
 
         Pixelmon.EVENT_BUS.register(new CaptureEventListener());
         Pixelmon.EVENT_BUS.register(new TradeEventListener());
@@ -39,6 +53,14 @@ public class Main {
         Pixelmon.EVENT_BUS.register(new NPCTradeEventListener());
     }
 
+    public void loadConfigs() {
+        try {
+            this.config = YamlConfigFactory.getInstance(YmlConfig.class);
+        } catch (IOException e) {
+            LOGGER.error(e.toString());
+        }
+    }
+
     @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ServerEvents {
         @SubscribeEvent
@@ -46,5 +68,9 @@ public class Main {
             CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommands().getDispatcher();
             ReloadCmd.register(dispatcher);
         }
+    }
+
+    public YmlConfig getConfig() {
+        return config;
     }
 }

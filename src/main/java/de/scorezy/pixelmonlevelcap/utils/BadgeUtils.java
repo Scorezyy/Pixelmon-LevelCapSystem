@@ -2,7 +2,7 @@ package de.scorezy.pixelmonlevelcap.utils;
 
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem.BadgeCase;
-import de.scorezy.pixelmonlevelcap.config.PLCConfig;
+import de.scorezy.pixelmonlevelcap.Main;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.MathHelper;
 
@@ -51,7 +51,7 @@ public class BadgeUtils {
      * @return corresponding pokemon level cap
      */
     private static int getBadgeLevel(int badgeCount) {
-        List<? extends Integer> cappedLevels = PLCConfig.COMMON.cappedLevels.get();
+        List<Integer> cappedLevels = Main.getInstance().getConfig().getCappedLevels();
         return !cappedLevels.isEmpty() ?
                 cappedLevels.get(MathHelper.clamp(badgeCount, 0, cappedLevels.size() - 1)) : 100;
     }

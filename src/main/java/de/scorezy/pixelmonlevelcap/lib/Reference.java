@@ -1,11 +1,12 @@
 package de.scorezy.pixelmonlevelcap.lib;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Reference {
     public static final String MOD_ID = "pixelmonlevelcap";
 
-    public static final List<Integer> DEFAULT_CAPPED_LEVELS = Arrays.asList(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+
+    public static final String CONFIG_PATH_PREFIX = "config/";
+
+    public static final String YAML_SUFFIX = ".yml";
+
+    public static final String CONFIG_PATH = CONFIG_PATH_PREFIX + "levelcap" + YAML_SUFFIX;
 }
