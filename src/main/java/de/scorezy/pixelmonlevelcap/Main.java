@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.config.api.yaml.YamlConfigFactory;
 import de.scorezy.pixelmonlevelcap.commands.ReloadCmd;
-import de.scorezy.pixelmonlevelcap.config.YmlConfig;
+import de.scorezy.pixelmonlevelcap.config.PLCConfig;
 import de.scorezy.pixelmonlevelcap.lib.Reference;
 import de.scorezy.pixelmonlevelcap.listeners.*;
 import net.minecraft.command.CommandSource;
@@ -25,7 +25,7 @@ public class Main {
 
     public static final Logger LOGGER = LogManager.getLogger();
 
-    private YmlConfig config;
+    private PLCConfig config;
 
     public Main() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -55,7 +55,7 @@ public class Main {
 
     public void loadConfigs() {
         try {
-            this.config = YamlConfigFactory.getInstance(YmlConfig.class);
+            this.config = YamlConfigFactory.getInstance(PLCConfig.class);
         } catch (IOException e) {
             LOGGER.error(e.toString());
         }
@@ -70,7 +70,7 @@ public class Main {
         }
     }
 
-    public YmlConfig getConfig() {
+    public PLCConfig getConfig() {
         return config;
     }
 }
