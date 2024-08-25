@@ -41,8 +41,6 @@ public class PixelmonLevelCap {
     }
 
     private void setup(FMLCommonSetupEvent event) {
-//        ConfigLoader.loadConfig();
-//        PLCConfig.setup();
         loadConfigs();
 
         Pixelmon.EVENT_BUS.register(new CaptureEventListener());

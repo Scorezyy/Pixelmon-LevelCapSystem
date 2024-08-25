@@ -8,6 +8,9 @@ import info.pixelmon.repack.org.spongepowered.objectmapping.ConfigSerializable;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Fields in this class will be automatically generated and saved into files via Yaml utils inside Pixelmon mod
+ */
 @ConfigPath(Reference.CONFIG_PATH)
 @ConfigSerializable
 public class PLCConfig extends AbstractYamlConfig {
