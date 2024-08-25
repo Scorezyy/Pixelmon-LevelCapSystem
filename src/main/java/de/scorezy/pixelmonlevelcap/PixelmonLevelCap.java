@@ -28,6 +28,8 @@ public class PixelmonLevelCap {
     private PLCConfig config;
 
     public PixelmonLevelCap() {
+        INSTANCE = this;
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         MinecraftForge.EVENT_BUS.register(this);
