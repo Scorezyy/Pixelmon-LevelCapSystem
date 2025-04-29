@@ -3,7 +3,13 @@ package de.scorezy.pixelmonlevelcap;
 import com.mojang.brigadier.CommandDispatcher;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import de.scorezy.pixelmonlevelcap.commands.ReloadConfigCommand;
-import de.scorezy.pixelmonlevelcap.listeners.*;
+import de.scorezy.pixelmonlevelcap.listeners.CaptureEventListener;
+import de.scorezy.pixelmonlevelcap.listeners.TradeEventListener;
+import de.scorezy.pixelmonlevelcap.listeners.PlayerInteractListener;
+import de.scorezy.pixelmonlevelcap.listeners.LevelUpEventListener;
+import de.scorezy.pixelmonlevelcap.listeners.RaidCaptureEventListener;
+import de.scorezy.pixelmonlevelcap.listeners.NPCTradeEventListener;
+import de.scorezy.pixelmonlevelcap.listeners.spawn.SpawnLevelCapListener;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
 import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,7 +24,6 @@ public class Main {
 
     public Main() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -31,7 +36,9 @@ public class Main {
         Pixelmon.EVENT_BUS.register(new LevelUpEventListener());
         Pixelmon.EVENT_BUS.register(new RaidCaptureEventListener());
         Pixelmon.EVENT_BUS.register(new NPCTradeEventListener());
+        Pixelmon.EVENT_BUS.register(new SpawnLevelCapListener());
     }
+
     @Mod.EventBusSubscriber(modid = "pixelmonlevelcap", bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ServerEvents {
         @SubscribeEvent
