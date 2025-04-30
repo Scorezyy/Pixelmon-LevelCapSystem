@@ -35,6 +35,19 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
 👨‍👨‍👦 Player Trades:
 - You want to trade with other players, you must have the appropriate badge level to receive the Pokémon.
 
+🆙 **Level-capped Spawns**  
+- Pokémon will now spawn at levels up to the cap determined by your badge level. This dynamic scaling keeps encounters rewarding —all based on your progress!  
+
+
+  _You can disable this behavior via configuration._
+
+🐞 **Debug Messages**  
+- New debug log output can be enabled to help track the caped poke spawns changes in real time.
+
+👥 **Multiplayer Spawn Priority**  
+- When two players are within a 7-chunk radius, spawns are prioritized for the player with the lowest badge level.
+
+
 ## Configuration
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
 `config/levelcap.yml`
