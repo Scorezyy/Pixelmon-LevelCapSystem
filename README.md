@@ -61,12 +61,17 @@ messages:
   trade_blocked: '&cYou cannot trade your Pokémon because it exceeds the allowed level!'
   npcTrade_access_message: "&aThe level of the traded Pokémon has been adjusted to match your badge level!"
   config_reloaded: '&aConfig has been successfully reloaded!'
+
+capped_poke_spawn: true    # enable level-capped spawns (set to false to disable)
+
+debug_messages: true       # show debug messages in console/log 
+
 ```
 
 ## Versions 🌌
 - Minecraft: 1.16.5
 - Forge: 36.2.34
-- Pixelmon: 9.1.12
+- Pixelmon: 9.1.12- 9.1.13 (TESTED)
 
 
 ## TODO 📋
