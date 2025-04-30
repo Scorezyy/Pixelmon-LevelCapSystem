@@ -41,11 +41,11 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
 
   _You can disable this behavior via configuration._
 
-🐞 **Debug Messages**  
-- New debug log output can be enabled to help track the caped poke spawns changes in real time.
-
 👥 **Multiplayer Spawn Priority**  
 - When two players are within a 7-chunk radius, spawns are prioritized for the player with the lowest badge level.
+
+🐞 **Debug Messages**  
+- New debug log output can be enabled to help track the caped poke spawns changes in real time.
 
 
 ## Configuration
