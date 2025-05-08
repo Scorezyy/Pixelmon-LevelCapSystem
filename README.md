@@ -35,6 +35,19 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
 👨‍👨‍👦 Player Trades:
 - You want to trade with other players, you must have the appropriate badge level to receive the Pokémon.
 
+🆙 **Level-capped Spawns**  
+- Pokémon will now spawn at levels up to the cap determined by your badge level. This dynamic scaling keeps encounters rewarding —all based on your progress!  
+
+
+  _You can disable this behavior via configuration._
+
+👥 **Multiplayer Spawn Priority**  
+- When two players are within a 7-chunk radius, spawns are prioritized for the player with the lowest badge level.
+
+🐞 **Debug Messages**  
+- New debug log output can be enabled to help track the caped poke spawns changes in real time.
+
+
 ## Configuration
 ✅ All text messages and badge levels are fully customizable in the configuration file located at:
 `config/levelcap.yml`
@@ -61,12 +74,17 @@ messages:
   trade_blocked: '&cYou cannot trade your Pokémon because it exceeds the allowed level!'
   npcTrade_access_message: "&aThe level of the traded Pokémon has been adjusted to match your badge level!"
   config_reloaded: '&aConfig has been successfully reloaded!'
+
+capped_poke_spawn: true    # enable level-capped spawns (set to false to disable)
+
+debug_messages: true       # show debug messages in console/log 
+
 ```
 
 ## Versions 🌌
 - Minecraft: 1.16.5
 - Forge: 36.2.34
-- Pixelmon: 9.1.12
+- Pixelmon: 9.1.12- 9.1.13 (TESTED)
 
 
 ## TODO 📋
