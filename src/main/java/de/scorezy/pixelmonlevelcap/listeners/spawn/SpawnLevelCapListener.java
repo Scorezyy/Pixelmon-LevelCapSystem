@@ -35,6 +35,12 @@ public class SpawnLevelCapListener {
             return;
         }
 
+        if (pkm.getOwner() != null
+                || pkm.getPokemon().getOwnerPlayer() != null
+                || pkm.getPokemon().getOwnerTrainer() != null) {
+            return;
+        }
+
         CompoundNBT data = pkm.getPersistentData();
         if (data.getBoolean(NBT_CLAMPED)) return;
 
