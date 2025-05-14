@@ -14,17 +14,38 @@ public class TradeEventListener {
     public void onPixelmonTrade(PixelmonTradeEvent.Pre event) {
         ServerPlayerEntity player1 = (ServerPlayerEntity) event.getPlayer1();
         ServerPlayerEntity player2 = (ServerPlayerEntity) event.getPlayer2();
+        Pokemon pokemon1 = event.getPokemon1();
+        Pokemon pokemon2 = event.getPokemon2();
         boolean shouldCancel = false;
 
-        if (exceedsMaxLevel(event.getPokemon1(), player1)) {
+        if (pokemon1 != null && exceedsMaxLevel(pokemon1, player1)) {
             shouldCancel = true;
-            String message = ConfigLoader.getTradeBlockedMessage();
-            player1.sendMessage(new StringTextComponent(message), player1.getUUID());
+            player1.sendMessage(
+                    new StringTextComponent(ConfigLoader.getTradeBlockedMessage()),
+                    player1.getUUID()
+            );
         }
-        if (exceedsMaxLevel(event.getPokemon2(), player2)) {
+        if (pokemon2 != null && exceedsMaxLevel(pokemon2, player2)) {
             shouldCancel = true;
-            String message = ConfigLoader.getTradeBlockedMessage();
-            player2.sendMessage(new StringTextComponent(message), player2.getUUID());
+            player2.sendMessage(
+                    new StringTextComponent(ConfigLoader.getTradeBlockedMessage()),
+                    player2.getUUID()
+            );
+        }
+
+        if (pokemon1 != null && exceedsMaxLevel(pokemon1, player2)) {
+            shouldCancel = true;
+            player2.sendMessage(
+                    new StringTextComponent(ConfigLoader.getTradeBlockedPartnerMessage()),
+                    player2.getUUID()
+            );
+        }
+        if (pokemon2 != null && exceedsMaxLevel(pokemon2, player1)) {
+            shouldCancel = true;
+            player1.sendMessage(
+                    new StringTextComponent(ConfigLoader.getTradeBlockedPartnerMessage()),
+                    player1.getUUID()
+            );
         }
 
         if (shouldCancel) {
@@ -33,6 +54,6 @@ public class TradeEventListener {
     }
 
     private boolean exceedsMaxLevel(Pokemon pokemon, ServerPlayerEntity player) {
-        return pokemon != null && pokemon.getPokemonLevel() > BadgeUtils.getMaxLevelForPlayer(player);
+        return pokemon.getPokemonLevel() > BadgeUtils.getMaxLevelForPlayer(player);
     }
 }
