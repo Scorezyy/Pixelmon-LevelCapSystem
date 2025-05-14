@@ -28,7 +28,7 @@ public class SpawnLevelCapListener {
         if (!(ent instanceof PixelmonEntity)) return;
         PixelmonEntity pkm = (PixelmonEntity) ent;
 
-        if (pkm.getPokemon().getSpecies().isLegendary()) {
+        if (pkm.getPokemon().getSpecies().isLegendary() && !ConfigLoader.isLegendaryLevelCapEnabled()) {
             if (ConfigLoader.isDebugMessagesEnabled()) {
                 System.out.println("[SpawnClamp] Skipping legendary " + pkm.getPokemonName());
             }

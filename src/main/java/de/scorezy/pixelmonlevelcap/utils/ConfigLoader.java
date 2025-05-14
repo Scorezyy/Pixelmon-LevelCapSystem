@@ -20,8 +20,9 @@ public class ConfigLoader {
 
     private static final String CONFIG_FILE_NAME = "levelcap.yml";
     private static final String[] DEFAULT_LEVELS = {"10","20","30","40","50","60","70","80","100"};
-    private static final boolean DEFAULT_CAPED_POKE_SPAWN = true;
-    private static final boolean DEFAULT_DEBUG_MESSAGES   = true;
+    private static final boolean DEFAULT_CAPED_POKE_SPAWN    = true;
+    private static final boolean DEFAULT_DEBUG_MESSAGES      = true;
+    private static final boolean DEFAULT_LEGENDARY_LEVELCAP  = false;  // neu
 
     private static final String DEFAULT_LEVEL_BLOCKED_MESSAGE      = "&cThis level is too high for your Pokémon!";
     private static final String DEFAULT_MAX_LEVEL_REACHED_MESSAGE  = "&cYour &ePokémon &chas already reached the maximum level";
@@ -90,6 +91,11 @@ public class ConfigLoader {
             changed = true;
         }
 
+        if (!yamlData.containsKey("legendary_levelcap")) {
+            yamlData.put("legendary_levelcap", DEFAULT_LEGENDARY_LEVELCAP);
+            changed = true;
+        }
+
         if (changed) {
             saveConfig(configFile, yamlData);
         }
@@ -119,6 +125,7 @@ public class ConfigLoader {
         yamlData.put("messages", createMessages());
         yamlData.put("caped_poke_spawn", DEFAULT_CAPED_POKE_SPAWN);
         yamlData.put("debug_messages", DEFAULT_DEBUG_MESSAGES);
+        yamlData.put("legendary_levelcap", DEFAULT_LEGENDARY_LEVELCAP);  // neu
         saveConfig(configFile, yamlData);
     }
 
@@ -175,5 +182,10 @@ public class ConfigLoader {
     public static boolean isDebugMessagesEnabled() {
         Object val = configData.get("debug_messages");
         return val instanceof Boolean ? (Boolean) val : DEFAULT_DEBUG_MESSAGES;
+    }
+
+    public static boolean isLegendaryLevelCapEnabled() {
+        Object val = configData.get("legendary_levelcap");
+        return val instanceof Boolean ? (Boolean) val : DEFAULT_LEGENDARY_LEVELCAP;
     }
 }
