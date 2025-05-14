@@ -79,6 +79,8 @@ capped_poke_spawn: true    # enable level-capped spawns (set to false to disable
 
 debug_messages: true       # show debug messages in console/log 
 
+legendary_levelcap: true   # enable legendary levelcap (set to false to disable)
+
 ```
 
 ## Versions 🌌
