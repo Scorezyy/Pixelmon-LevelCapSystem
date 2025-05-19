@@ -18,9 +18,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.common.Mod;
 
-@Mod("pixelmonlevelcap")
+@net.neoforged.fml.common.Mod("pixelmonlevelcap")
 public class Main {
+
+    public static final String MODID = "pixelmonlevelcap";
 
     public Main() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
