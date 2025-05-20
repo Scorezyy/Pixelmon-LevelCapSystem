@@ -2,14 +2,14 @@ package de.scorezy.pixelmonlevelcap.listeners;
 
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
 
 public class RaidCaptureEventListener {
 
     @SubscribeEvent
     public void onStartRaidCapture(CaptureEvent.StartRaidCapture event) {
-        ServerPlayerEntity player = event.getPlayer();
+        ServerPlayer player = event.getPlayer();
         int pokemonLevel = event.getRaidPokemon().getPokemonLevel();
         int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
 

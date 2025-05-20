@@ -1,32 +1,32 @@
 package de.scorezy.pixelmonlevelcap.listeners.spawn;
 
+import com.pixelmonmod.pixelmon.api.storage.NPCPartyStorage;
 import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
+import de.scorezy.pixelmonlevelcap.Main;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Mod.EventBusSubscriber(modid = "pixelmonlevelcap", bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = Main.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class SpawnLevelCapListener {
     private static final String NBT_CLAMPED = "PixelmonLevelCap.Clamped";
     private static final double RADIUS = 6 * 16;
 
     @SubscribeEvent
-    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+    public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
         if (!ConfigLoader.isCapedPokeSpawnEnabled()) return;
-        if (event.getWorld().isClientSide()) return;
+        if (event.getLevel().isClientSide()) return;
 
         Entity ent = event.getEntity();
-        if (!(ent instanceof PixelmonEntity)) return;
-        PixelmonEntity pkm = (PixelmonEntity) ent;
+        if (!(ent instanceof PixelmonEntity pkm)) return;
 
         if (pkm.getPokemon().getSpecies().isLegendary() && !ConfigLoader.isLegendaryLevelCapEnabled()) {
             if (ConfigLoader.isDebugMessagesEnabled()) {
@@ -37,19 +37,19 @@ public class SpawnLevelCapListener {
 
         if (pkm.getOwner() != null
                 || pkm.getPokemon().getOwnerPlayer() != null
-                || pkm.getPokemon().getOwnerTrainer() != null) {
+                || pkm.getStorage() != null && pkm.getStorage() instanceof NPCPartyStorage npcPartyStorage && npcPartyStorage.getNPC() != null) {
             return;
         }
 
-        CompoundNBT data = pkm.getPersistentData();
+        CompoundTag data = pkm.getPersistentData();
         if (data.getBoolean(NBT_CLAMPED)) return;
 
-        ServerWorld world = (ServerWorld) pkm.level;
-        List<ServerPlayerEntity> nearby = world.players().stream()
-                .filter(pl -> pl instanceof ServerPlayerEntity)
-                .map(pl -> (ServerPlayerEntity) pl)
+        ServerLevel world = (ServerLevel) pkm.level();
+        List<ServerPlayer> nearby = world.players().stream()
+                .filter(pl -> pl instanceof ServerPlayer)
+                .map(pl -> (ServerPlayer) pl)
                 .filter(pl -> pl.distanceTo(pkm) <= RADIUS)
-                .collect(Collectors.toList());
+                .toList();
 
         int minCap = nearby.stream()
                 .mapToInt(BadgeUtils::getMaxLevelForPlayer)

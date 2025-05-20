@@ -3,26 +3,26 @@ package de.scorezy.pixelmonlevelcap.listeners;
 import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class PlayerInteractListener {
 
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
         if (event.getTarget() instanceof PixelmonEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+            ServerPlayer player = (ServerPlayer) event.getEntity();
             int pokemonLevel = ((PixelmonEntity) event.getTarget()).getLvl().getPokemonLevel();
             int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
 
             if (pokemonLevel > maxLevel) {
                 event.setCanceled(true);
-                event.setCancellationResult(ActionResultType.FAIL);
+                event.setCancellationResult(InteractionResult.FAIL);
                 String message = ConfigLoader.getRightClickBlockedMessage();
-                player.sendMessage(new StringTextComponent(message), player.getUUID());
+                player.sendSystemMessage(Component.literal(message));
             }
         }
     }

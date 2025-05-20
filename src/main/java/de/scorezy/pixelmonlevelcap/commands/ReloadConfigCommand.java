@@ -4,13 +4,13 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 
 public class ReloadConfigCommand {
 
-    public static void register(CommandDispatcher<CommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("levelcapreload")
                         .requires(source -> source.hasPermission(2))
@@ -18,10 +18,10 @@ public class ReloadConfigCommand {
         );
     }
 
-    private static int execute(CommandContext<CommandSource> context) {
-        CommandSource source = context.getSource();
+    private static int execute(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack source = context.getSource();
         ConfigLoader.loadConfig();
-        source.sendSuccess(new TranslationTextComponent(ConfigLoader.getDefaultConfigLoaded()), true);
+        source.sendSuccess(() -> Component.translatable(ConfigLoader.getDefaultConfigLoaded()), true);
         return Command.SINGLE_SUCCESS;
     }
 }
