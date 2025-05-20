@@ -95,9 +95,7 @@ neoForge {
 
         // applies to all the run configs above
         configureEach {
-            dependencies  {
-                neoFormRuntime {} 'org.yaml:snakeyaml:2.4'
-            }
+
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
             // "SCAN": For mods scan.
