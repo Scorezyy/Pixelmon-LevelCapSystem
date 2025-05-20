@@ -4,17 +4,18 @@ import com.pixelmonmod.pixelmon.api.events.PixelmonTradeEvent;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
+
 
 public class TradeEventListener {
 
     @SubscribeEvent
     public void onPixelmonTrade(PixelmonTradeEvent.Pre event) {
-        ServerPlayerEntity player1 = (ServerPlayerEntity) event.getPlayer1();
-        ServerPlayerEntity player2 = (ServerPlayerEntity) event.getPlayer2();
+        ServerPlayer player1 = (ServerPlayer) event.getPlayer1();
+        ServerPlayer player2 = (ServerPlayer) event.getPlayer2();
         Pokemon poke1 = event.getPokemon1();
         Pokemon poke2 = event.getPokemon2();
 
@@ -27,7 +28,7 @@ public class TradeEventListener {
         }
     }
 
-    private boolean checkAndNotify(Pokemon pokemon, ServerPlayerEntity owner, ServerPlayerEntity partner) {
+    private boolean checkAndNotify(Pokemon pokemon, ServerPlayer owner, ServerPlayer partner) {
         if (pokemon == null) {
             return false;
         }
@@ -37,13 +38,13 @@ public class TradeEventListener {
         int partnerCap = BadgeUtils.getMaxLevelForPlayer(partner);
 
         if (level > ownerCap) {
-            owner.sendMessage(new StringTextComponent(ConfigLoader.getTradeBlockedMessage()), Util.NIL_UUID);
+            owner.sendSystemMessage(Component.literal(ConfigLoader.getTradeBlockedMessage()));
             return true;
         }
 
         if (level > partnerCap) {
-            partner.sendMessage(new StringTextComponent(ConfigLoader.getTradeBlockedMessage()), Util.NIL_UUID);
-            owner.sendMessage(new StringTextComponent(ConfigLoader.getTradeBlockedPartnerMessage()), Util.NIL_UUID);
+            partner.sendSystemMessage(Component.literal(ConfigLoader.getTradeBlockedMessage()));
+            owner.sendSystemMessage(Component.literal(ConfigLoader.getTradeBlockedPartnerMessage()));
             return true;
         }
 

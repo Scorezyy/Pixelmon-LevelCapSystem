@@ -3,6 +3,7 @@ package de.scorezy.pixelmonlevelcap.listeners;
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -32,7 +33,7 @@ public class CaptureEventListener {
     private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayer player) {
         event.setCanceled(true);
         String message = ConfigLoader.getCaptureBlockedMessage();
-        player.sendSystemMessage(new StringTextComponent(message));
+        player.sendSystemMessage(Component.literal(message));
     }
 
     private void returnBallToPlayer(CaptureEvent.StartCapture event, ServerPlayer player) {

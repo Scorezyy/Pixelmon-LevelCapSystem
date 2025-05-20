@@ -4,9 +4,9 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 
 public class ReloadConfigCommand {
 
@@ -21,7 +21,7 @@ public class ReloadConfigCommand {
     private static int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
         ConfigLoader.loadConfig();
-        source.sendSuccess(new TranslationTextComponent(ConfigLoader.getDefaultConfigLoaded()), true);
+        source.sendSuccess(() -> Component.translatable(ConfigLoader.getDefaultConfigLoaded()), true);
         return Command.SINGLE_SUCCESS;
     }
 }

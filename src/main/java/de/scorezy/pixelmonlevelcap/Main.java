@@ -12,7 +12,7 @@ import de.scorezy.pixelmonlevelcap.listeners.RaidCaptureEventListener;
 import de.scorezy.pixelmonlevelcap.listeners.NPCTradeEventListener;
 import de.scorezy.pixelmonlevelcap.listeners.spawn.SpawnLevelCapListener;
 import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
-import net.minecraft.commands.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -51,7 +51,7 @@ public class Main {
     public static class ServerEvents {
         @SubscribeEvent
         public static void onServerStarting(ServerStartedEvent event) {
-            CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommands().getDispatcher();
+            CommandDispatcher<CommandSourceStack> dispatcher = event.getServer().getCommands().getDispatcher();
             ReloadConfigCommand.register(dispatcher);
         }
     }

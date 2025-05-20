@@ -1,9 +1,9 @@
 package de.scorezy.pixelmonlevelcap.utils;
 
+import com.pixelmonmod.pixelmon.init.registry.PixelmonDataComponents;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem.BadgeCase;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 public class BadgeUtils {
@@ -21,11 +21,12 @@ public class BadgeUtils {
 
     public static int getMaxLevelForPlayer(ServerPlayer player) {
         ItemStack badgeCaseStack = findBadgeCaseItemStack(player);
+
         if (badgeCaseStack == null) {
             return getDefaultLevel();
         }
 
-        BadgeCase badgeCase = BadgeCaseItem.BadgeCase.readFromItemStack(badgeCaseStack);
+        BadgeCase badgeCase = badgeCaseStack.get(PixelmonDataComponents.BADGE_CASE);
         if (badgeCase != null && badgeCase.isOwner(player)) {
             int badgeCount = badgeCase.badges().size();
             return getMaxLevel(badgeCount);
