@@ -32,8 +32,7 @@ public class Main {
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::setup);
-        NeoForge.EVENT_BUS.register(this);
-    }
+        }
 
     private void setup(final FMLCommonSetupEvent event) {
         ConfigLoader.loadConfig();
