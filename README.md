@@ -55,8 +55,8 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
 
 ## Configuration
 ✅ All texts, settings, messages, and excluded Pokémon can now be fully customized in the configuration files at:
-`config/levelcapsystem/:
- settings.yml
+`config/levelcapsystem/:`
+ `settings.yml
  messages.yml
  excludelevelcap.yml
  badgelevel.yml`
