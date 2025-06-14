@@ -1,14 +1,15 @@
-package de.scorezy.pixelmonlevelcap.commands;
+package de.scorezy.pixelmonlevelcapsystem.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
+import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 public class ReloadConfigCommand {
+
 
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(
@@ -21,7 +22,8 @@ public class ReloadConfigCommand {
     private static int execute(CommandContext<CommandSource> context) {
         CommandSource source = context.getSource();
         ConfigLoader.loadConfig();
-        source.sendSuccess(new TranslationTextComponent(ConfigLoader.getDefaultConfigLoaded()), true);
+        String reloadMsg = ConfigLoader.getMessagesConfig().getConfigReloaded();
+        source.sendSuccess(new StringTextComponent(reloadMsg), true);
         return Command.SINGLE_SUCCESS;
     }
 }

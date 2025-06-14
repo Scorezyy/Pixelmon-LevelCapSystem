@@ -1,0 +1,50 @@
+#####################################################
+#    ___           _              __                _
+#   / __\ __ _  __| | __ _  ___  / /  _____   _____| |___
+#  /__\/// _` |/ _` |/ _` |/ _ \/ /  / _ \ \ / / _ | / __|
+# / \/  | (_| | (_| | (_| |  __/ /__|  __/\ V |  __| \__ \
+# \_____/\__,_|\__,_|\__, |\___\____/\___| \_/ \___|_|___/
+#                    |___/
+#####################################################
+
+# When true, the Mod ignores BadgeCase counts and uses permissions instead.
+use_permissions: false
+
+# ————————————————————————————————————————————————————————————————
+# Permission-based level caps: define as many ranks as you need.
+# After the “:” specify the maximum Pokémon level allowed by that permission.
+# The mod checks every entry and applies the HIGHEST matching level cap.
+# You can add beyond badge.8, e.g. badge.9, badge.10, etc. — no hard limit!
+# ————————————————————————————————————————————————————————————————
+permission_levels:
+  pixelmonlevelcap.badge.0:  10
+  pixelmonlevelcap.badge.1:  20
+  pixelmonlevelcap.badge.2:  30
+  pixelmonlevelcap.badge.3:  40
+  pixelmonlevelcap.badge.4:  50
+  pixelmonlevelcap.badge.5:  60
+  pixelmonlevelcap.badge.6:  70
+  pixelmonlevelcap.badge.7:  80
+  pixelmonlevelcap.badge.8: 100
+  # Add as many entries as you like—no hard limit!
+
+
+# ————————————————————————————————————————————————————————————————
+# Badge-count based level caps (used when use_permissions: false):
+# The Mod reads how many badges are in the player's BadgeCase,
+# then looks up that count in this mapping.
+# If the player's badge count exceeds the highest defined key,
+# it will use the level for the highest defined badge-count entry.
+# You can list more than 8 entries—no hard limit!
+# ———————————————————————————————————————————————————————————————
+badge_levels:
+  0: 10
+  1: 20
+  2: 30
+  3: 40
+  4: 50
+  5: 60
+  6: 70
+  7: 80
+  8: 100
+  # Add as many entries as you like—no hard limit!

@@ -1,16 +1,12 @@
-package de.scorezy.pixelmonlevelcap;
+package de.scorezy.pixelmonlevelcapsystem;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.pixelmonmod.pixelmon.Pixelmon;
-import de.scorezy.pixelmonlevelcap.commands.ReloadConfigCommand;
-import de.scorezy.pixelmonlevelcap.listeners.CaptureEventListener;
-import de.scorezy.pixelmonlevelcap.listeners.TradeEventListener;
-import de.scorezy.pixelmonlevelcap.listeners.PlayerInteractListener;
-import de.scorezy.pixelmonlevelcap.listeners.LevelUpEventListener;
-import de.scorezy.pixelmonlevelcap.listeners.RaidCaptureEventListener;
-import de.scorezy.pixelmonlevelcap.listeners.NPCTradeEventListener;
-import de.scorezy.pixelmonlevelcap.listeners.spawn.SpawnLevelCapListener;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
+import de.scorezy.pixelmonlevelcapsystem.commands.ReloadConfigCommand;
+import de.scorezy.pixelmonlevelcapsystem.listeners.*;
+import de.scorezy.pixelmonlevelcapsystem.listeners.spawn.SpawnLevelCapListener;
+import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
+import de.scorezy.pixelmonlevelcapsystem.utils.StartScreen;
 import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("pixelmonlevelcap")
+@Mod("pixelmonlevelcapsystem")
 public class Main {
 
     public Main() {
@@ -32,19 +28,22 @@ public class Main {
 
         Pixelmon.EVENT_BUS.register(new CaptureEventListener());
         Pixelmon.EVENT_BUS.register(new TradeEventListener());
-        Pixelmon.EVENT_BUS.register(new PlayerInteractListener());
-        Pixelmon.EVENT_BUS.register(new LevelUpEventListener());
+        Pixelmon.EVENT_BUS.register(new ExperienceListener());
         Pixelmon.EVENT_BUS.register(new RaidCaptureEventListener());
         Pixelmon.EVENT_BUS.register(new NPCTradeEventListener());
         Pixelmon.EVENT_BUS.register(new SpawnLevelCapListener());
+        Pixelmon.EVENT_BUS.register(new DuplicatedBadgeListener());
     }
 
-    @Mod.EventBusSubscriber(modid = "pixelmonlevelcap", bus = Mod.EventBusSubscriber.Bus.FORGE)
+    @Mod.EventBusSubscriber(modid = "pixelmonlevelcapsystem", bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ServerEvents {
         @SubscribeEvent
         public static void onServerStarting(FMLServerStartedEvent event) {
+            StartScreen.printStartupBanner(event.getServer());
+
             CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommands().getDispatcher();
             ReloadConfigCommand.register(dispatcher);
         }
     }
+
 }

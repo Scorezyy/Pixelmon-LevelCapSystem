@@ -1,0 +1,56 @@
+#####################################################
+#    __                _   ___
+#   / /  _____   _____| | / __\__ _ _ __
+#  / /  / _ \ \ / / _ | |/ /  / _` | '_ \
+# / /__|  __/\ V |  __| / /__| (_| | |_) |
+# \____/\___| \_/ \___|_\____/\__,_| .__/
+#                                |_|
+#       LevelCap System Configuration Settings
+#####################################################
+
+settings:
+  # If true, any wild Pokémon spawning above your badge cap will be reduced
+  # down to the maximum level your badges allow.
+  levelcap_wild_pokemons: true
+
+  # If true, legendary Pokémon are also subject to your badge-level cap;
+  # if false, they spawn at their normal levels regardless of badges.
+  levelcap_legendary_pokemons: false
+
+  # If true, attempts to capture Pokémon whose level exceeds your badge cap
+  # will be canceled and the Pokéball returned to your inventory.
+  block_captures: true
+
+  # If true, you can still use level-up items (e.g., Rare Candy) on Pokémon
+  # above your badge cap, but they will not gain levels once they reach it.
+  block_interactions: true
+
+  # In wild battles, prevent any level-up from earned experience (not via items)
+  # if it would raise a Pokémon’s level above your badge-level cap
+  block_level_ups: true
+
+  # If true, any XP earned once a Pokémon is at your badge-level cap will be saved
+  # and applied toward its next level once you earn another badge.
+  # If false, XP gained above the cap is discarded and the Pokémon receives 0 XP.
+  block_experience_gain: true
+
+  # If true, any Pokémon you receive from an NPC trade whose level exceeds
+  # your badge-level cap will have its level automatically set to your current
+  # maximum badge-level cap.
+  levelcap_npc_trades: true
+
+  # If true, any raid-generated Pokémon whose level would exceed your badge-level cap
+  # will be automatically reduced to your current maximum badge-level cap when it spawns.
+  levelcap_raid_pokemons: true
+
+  # If true, player-to-player trades are disallowed if the traded Pokémon’s
+  # level exceeds the recipient’s badge-level cap.
+  levelcap_player_trades: true
+
+
+# If true, log each cap or block event once to the server console for debugging purposes.
+debugging:
+  debug: false
+
+
+

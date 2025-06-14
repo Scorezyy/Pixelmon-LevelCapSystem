@@ -1,0 +1,17 @@
+#####################################################
+#   /\/\   ___ ___ ___  __ _  __ _  ___ ___
+#  /    \ / _ / __/ __|/ _` |/ _` |/ _ / __|
+# / /\/\ |  __\__ \__ | (_| | (_| |  __\__ \
+# \/    \/\___|___|___/\__,_|\__, |\___|___/
+#
+#####################################################
+messages:
+  level_blocked: "&cThis level is too high for your Pokémon!"
+  max_level_reached: "&cYour &ePokémon &chas already reached the maximum level"
+  capture_blocked: "&cThis &ePokémon &cis too strong for you to catch!"
+  interact_blocked: "&cThe Pokémon is too high level for you!"
+  trade_blocked: "&cYou cannot trade your Pokémon because it exceeds the allowed level!"
+  trade_blocked_partner: "&cThe other player does not have enough badges to trade this Pokémon with you!"
+  npc_trade_access: "&cThe level of the traded &ePokémon &chas been adjusted to match your &dbadge level&7!"
+  overLevelMessage: "&cYour Pokémon &e{pokemon} &chas reached the level cap! &aEXP stored&7: &e{exp}"
+  config_reloaded: "&aConfig has been successfully reloaded!"

@@ -1,8 +1,9 @@
-package de.scorezy.pixelmonlevelcap.listeners;
+package de.scorezy.pixelmonlevelcapsystem.listeners;
 
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
-import de.scorezy.pixelmonlevelcap.utils.BadgeUtils;
-import de.scorezy.pixelmonlevelcap.utils.ConfigLoader;
+import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
+import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
+import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
@@ -12,17 +13,24 @@ public class CaptureEventListener {
 
     @SubscribeEvent
     public void blockViaCaptureAttempt(CaptureEvent.StartCapture event) {
+        if (!ConfigLoader.getSettingsConfig().isBlockCaptures()) {
+            return;
+        }
+
         ServerPlayerEntity player = event.getPlayer();
+        String playerName = player.getName().getString();
+        String pokemonName = event.getPokemon().getPokemonName();
         int pokemonLevel = event.getPokemon().getLvl().getPokemonLevel();
         int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
 
-        if (isCaptureBlocked(pokemonLevel, maxLevel)) {
+        if (pokemonLevel > maxLevel) {
+            Logger.debug(playerName + " tried to catch " + pokemonName +
+                    " (lvl " + pokemonLevel + ") but cap is " + maxLevel);
             handleCaptureRestriction(event, player);
+        } else {
+            Logger.debug(playerName + " is allowed to catch " + pokemonName +
+                    " (lvl " + pokemonLevel + "), cap is " + maxLevel);
         }
-    }
-
-    private boolean isCaptureBlocked(int pokemonLevel, int maxLevel) {
-        return pokemonLevel > maxLevel;
     }
 
     private void handleCaptureRestriction(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
@@ -32,7 +40,7 @@ public class CaptureEventListener {
 
     private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
         event.setCanceled(true);
-        String message = ConfigLoader.getCaptureBlockedMessage();
+        String message = ConfigLoader.getMessagesConfig().getCaptureBlocked();
         player.sendMessage(new StringTextComponent(message), player.getUUID());
     }
 
