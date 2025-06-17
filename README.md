@@ -62,9 +62,9 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
  badgelevel.yml`
 
 ## Versions 🌌
-- Minecraft: 1.16.5
-- Forge: 36.2.34
-- Pixelmon: 9.1.12- 9.1.13 (TESTED)
+- Minecraft: 1.16.5 & 1.20.2
+- Forge: 36.2.34 / 48.1.0
+- Pixelmon: 9.1.12 - 9.1.13 / 9.2.10 (TESTED)
 
 
 ## TODO 📋
