@@ -6,8 +6,8 @@ import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -19,7 +19,7 @@ public class ExperienceListener {
         Pokemon pokemon = event.pokemon.getPokemon();
 
         if (pokemon == null) return;
-        ServerPlayerEntity player = pokemon.getOwnerPlayer();
+        ServerPlayer player = pokemon.getOwnerPlayer();
         if (player == null) return;
 
         boolean capItems         = ConfigLoader.getSettingsConfig().isBlockInteractions();
@@ -76,7 +76,7 @@ public class ExperienceListener {
             String msg = template
                     .replace("{pokemon}", pokemon.getSpecies().getName())
                     .replace("{exp}", String.valueOf(gainedXP));
-            player.sendMessage(new StringTextComponent(msg), player.getUUID());
+            player.sendSystemMessage(Component.literal(msg));
 
         } else {
             int maxAllowedXP = expForNextLevel - 1;
@@ -102,7 +102,7 @@ public class ExperienceListener {
             } else {
                 msg = ConfigLoader.getMessagesConfig().getInteractBlocked();
             }
-            player.sendMessage(new StringTextComponent(msg), player.getUUID());
+            player.sendSystemMessage(Component.literal(msg));
         }
     }
 }

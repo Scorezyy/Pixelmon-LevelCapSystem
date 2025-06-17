@@ -4,71 +4,58 @@ import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CaptureEventListener {
 
     @SubscribeEvent
     public void blockViaCaptureAttempt(CaptureEvent.StartCapture event) {
-        if (!ConfigLoader.getSettingsConfig().isBlockCaptures()) {
+        if (!ConfigLoader.getSettingsConfig().isBlockCaptures()) return;
+
+        ServerPlayer player = (ServerPlayer) event.getPlayer();
+        String playerName   = player.getName().getString();
+        String pokemonName  = event.getPokemon().getPokemonName();
+        int pokemonLevel    = event.getPokemon().getLvl().getPokemonLevel();
+        int maxLevel        = BadgeUtils.getMaxLevelForPlayer(player);
+
+        if (pokemonLevel <= maxLevel) {
+            Logger.debug(playerName + " is allowed to catch " + pokemonName +
+                    " (lvl " + pokemonLevel + "), cap is " + maxLevel);
             return;
         }
 
-        ServerPlayerEntity player = event.getPlayer();
-        String playerName = player.getName().getString();
-        String pokemonName = event.getPokemon().getPokemonName();
-        int pokemonLevel = event.getPokemon().getLvl().getPokemonLevel();
-        int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
-
-        if (pokemonLevel > maxLevel) {
-            Logger.debug(playerName + " tried to catch " + pokemonName +
-                    " (lvl " + pokemonLevel + ") but cap is " + maxLevel);
-            handleCaptureRestriction(event, player);
-        } else {
-            Logger.debug(playerName + " is allowed to catch " + pokemonName +
-                    " (lvl " + pokemonLevel + "), cap is " + maxLevel);
-        }
-    }
-
-    private void handleCaptureRestriction(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
-        cancelEvent(event, player);
-        returnBallToPlayer(event, player);
-    }
-
-    private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
+        Logger.debug(playerName + " tried to catch " + pokemonName +
+                " (lvl " + pokemonLevel + ") but cap is " + maxLevel);
         event.setCanceled(true);
-        String message = ConfigLoader.getMessagesConfig().getCaptureBlocked();
-        player.sendMessage(new StringTextComponent(message), player.getUUID());
-    }
+        player.sendSystemMessage(Component.literal(
+                ConfigLoader.getMessagesConfig().getCaptureBlocked()
+        ));
 
-    private void returnBallToPlayer(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
         ItemStack ballStack = event.getPokeBall().getBallType().getBallItem();
         if (!ballStack.isEmpty()) {
             addBallToInventory(player, ballStack);
         }
     }
 
-    private void addBallToInventory(ServerPlayerEntity player, ItemStack ballStack) {
-        for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-            ItemStack slotStack = player.inventory.getItem(i);
-            if (slotStack.isEmpty()) {
-                player.inventory.setItem(i, ballStack.copy());
+    private void addBallToInventory(ServerPlayer player, ItemStack ballStack) {
+        Inventory inv = player.getInventory();
+        for (int i = 0, sz = inv.getContainerSize(); i < sz; i++) {
+            ItemStack slot = inv.getItem(i);
+            if (slot.isEmpty()) {
+                inv.setItem(i, ballStack.copy());
                 return;
             }
-            if (slotStack.getItem() == ballStack.getItem()) {
-                addToStack(slotStack, ballStack);
+            if (slot.getItem() == ballStack.getItem()) {
+                int space = slot.getMaxStackSize() - slot.getCount();
+                int toAdd = Math.min(space, ballStack.getCount());
+                slot.grow(toAdd);
+                ballStack.shrink(toAdd);
                 if (ballStack.isEmpty()) return;
             }
         }
-    }
-
-    private void addToStack(ItemStack slotStack, ItemStack ballStack) {
-        int space = slotStack.getMaxStackSize() - slotStack.getCount();
-        int amountToAdd = Math.min(space, ballStack.getCount());
-        slotStack.grow(amountToAdd);
-        ballStack.shrink(amountToAdd);
     }
 }

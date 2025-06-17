@@ -4,32 +4,32 @@ import com.pixelmonmod.pixelmon.items.BadgeCaseItem;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem.BadgeCase;
 import de.scorezy.pixelmonlevelcapsystem.configs.BadgeLevelConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.SettingsConfig;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.server.permission.PermissionAPI;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public class BadgeUtils {
 
-    public static ItemStack findBadgeCaseItemStack(ServerPlayerEntity player) {
-        if (player == null || player.inventory == null) {
+    public static ItemStack findBadgeCaseItemStack(ServerPlayer player) {
+        if (player == null || player.getInventory() == null) {
             return null;
         }
-        return player.inventory.items.stream()
+        return player.getInventory().items.stream()
                 .filter(stack -> stack != null && stack.getItem() instanceof BadgeCaseItem)
                 .findFirst()
                 .orElse(null);
+
     }
 
-    public static int getMaxLevelForPlayer(ServerPlayerEntity player) {
+    public static int getMaxLevelForPlayer(ServerPlayer player) {
         BadgeLevelConfig blc = ConfigLoader.getBadgeLevelConfig();
         SettingsConfig sc = ConfigLoader.getSettingsConfig();
 
         if (blc.isUsePermissions()) {
             return blc.getPermissionLevels().entrySet().stream()
-                    .filter(e -> PermissionAPI.hasPermission(player, e.getKey()))
+                    .filter(e -> hasPermission(player, e.getKey()))
                     .mapToInt(Map.Entry::getValue)
                     .max()
                     .orElse(getDefaultBadgeLevel(blc));
@@ -44,6 +44,10 @@ public class BadgeUtils {
         }
 
         return getDefaultBadgeLevel(blc);
+    }
+
+    private static boolean hasPermission(ServerPlayer player, String permissionString) {
+        return PermissionHandler.hasPermission(player, permissionString);
     }
 
     private static int getDefaultBadgeLevel(BadgeLevelConfig blc) {

@@ -4,7 +4,7 @@ import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RaidCaptureEventListener {
@@ -15,7 +15,7 @@ public class RaidCaptureEventListener {
             return;
         }
 
-        ServerPlayerEntity player = event.getPlayer();
+        ServerPlayer player = event.getPlayer();
         String playerName = player.getName().getString();
         String speciesName = event.getRaidPokemon().getSpecies().getName();
         int originalLevel = event.getRaidPokemon().getPokemonLevel();

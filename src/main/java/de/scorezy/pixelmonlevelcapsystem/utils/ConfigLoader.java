@@ -4,7 +4,6 @@ import de.scorezy.pixelmonlevelcapsystem.configs.BadgeLevelConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.ExcludeLevelCapPokemonConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.MessagesConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.SettingsConfig;
-import info.pixelmon.repack.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +12,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.Yaml;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 public class ConfigLoader {
@@ -70,6 +70,11 @@ public class ConfigLoader {
                         "# You can freely name the permissions, e.g.:\n" +
                         "#   rank.gold.levelcap, trainer.level.15, or my.custom.permission\n" +
                         "# Only the level value matters — not the permission name itself.\n" +
+                        "# ________________________________________________________________\n" +
+                        "# ⚠\uFE0FFor Minecraft 1.20.2 or above, all permission nodes must start with \"lcs.\".\n" +
+                        "# Examples: lcs.gold.badge.6, lcs.emerald.badge.2, or the default lcs.pixelmonlevelcap.badge.8\n" +
+                        "# \n" +
+                        "# ⚠\uFE0F⚠\uFE0F⚠\uFE0F If you change the permissions, you must restart the server! Thank you ⚠\uFE0F⚠\uFE0F⚠\uFE0F\n" +
                         "# ________________________________________________________________\n" +
                         "permission_levels:\n" +
                         "  pixelmonlevelcap.badge.0:  10\n" +

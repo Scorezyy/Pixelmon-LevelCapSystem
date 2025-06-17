@@ -12,12 +12,13 @@ public class StartScreen {
         String serverType = server.getServerModName();
 
         log("§a  _    ___ ___ ");
-        log("§a | |  / __/ __|   §eLevelCapSystem v2.0");
+        log("§a | |  / __/ __|   §eLevelCapSystem v2.0.1");
         log("§a | |_| (__\\__ \\   §7Running on - §b" + serverType);
         log("§a |____\\___|___/   §7by Jxstn / Scorezy");
         log("");
         log("§byou need help§7? §ajoin §7my §9discord§7: §ehttps://discord.gg/RnDtKgq3pK");
         log("");
+        ConfigLoader.loadConfig();
     }
 
     private static void log(String message) {
