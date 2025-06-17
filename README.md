@@ -69,4 +69,4 @@ For example, if your highest badge allows you to control level 20 Pokémon, the 
 
 ## TODO 📋
 - ✅ Implement a disable module to individually deactivate trading, catching, raids, and interactions.
-- ❌ Version Support: 1.20.2 / 1.21.1 - comming
+- ❌ Version Support: 1.21.1 - comming
