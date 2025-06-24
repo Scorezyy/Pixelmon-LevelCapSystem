@@ -1,6 +1,9 @@
 package de.scorezy.pixelmonlevelcapsystem.listeners.spawn;
 
 import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
+import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.api.pokemon.species.Stats;
+import de.scorezy.pixelmonlevelcapsystem.configs.ExcludeLevelCapPokemonConfig;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
@@ -31,21 +34,35 @@ public class SpawnLevelCapListener {
         if (!(ent instanceof PixelmonEntity)) {
             return;
         }
-
         PixelmonEntity pkm = (PixelmonEntity) ent;
-        String speciesName = pkm.getPokemonName();
+        Pokemon poke = pkm.getPokemon();
 
-        if (pkm.getPokemon().getSpecies().isLegendary()
+        String baseKey = poke.getSpecies()
+                .getStrippedName()
+                .toLowerCase();
+
+        Stats formStats = poke.getForm();
+        String formJsonName = formStats.getName()
+                .toLowerCase();
+
+        String fullKey;
+        if (formJsonName.equals("normal") || formJsonName.equals(baseKey) || formJsonName.isEmpty()) {
+            fullKey = baseKey;
+        } else {
+            fullKey = formJsonName + "-" + baseKey;
+        }
+
+        if (poke.getSpecies().isLegendary()
                 && !ConfigLoader.getSettingsConfig().isLevelCapLegendaryPokemons()) {
             if (ConfigLoader.getSettingsConfig().isDebug()) {
-                Logger.debug("Skipping legendary " + speciesName);
+                Logger.debug("Skipping legendary " + fullKey);
             }
             return;
         }
 
         if (pkm.getOwner() != null
-                || pkm.getPokemon().getOwnerPlayer() != null
-                || pkm.getPokemon().getOwnerTrainer() != null) {
+                || poke.getOwnerPlayer() != null
+                || poke.getOwnerTrainer() != null) {
             return;
         }
 
@@ -54,9 +71,10 @@ public class SpawnLevelCapListener {
             return;
         }
 
-        if (ConfigLoader.getExcludeLevelCapPokemonConfig().isExcluded(speciesName)) {
+        ExcludeLevelCapPokemonConfig excl = ConfigLoader.getExcludeLevelCapPokemonConfig();
+        if (excl.isExcluded(baseKey, fullKey)) {
             if (ConfigLoader.getSettingsConfig().isDebug()) {
-                Logger.debug("Skipping excluded Pokémon " + speciesName);
+                Logger.debug("Skipping excluded Pokémon " + fullKey);
             }
             return;
         }
@@ -77,8 +95,9 @@ public class SpawnLevelCapListener {
         int clamped = Math.min(Math.max(1, origLevel), minCap);
 
         if (ConfigLoader.getSettingsConfig().isDebug()) {
-            Logger.debug(String.format("%s origLevel=%d -> setLevel=%d (BadgeLevelCap=%d, playersInRange=%d)",
-                    speciesName, origLevel, clamped, minCap, nearby.size()));
+            Logger.debug(String.format(
+                    "%s origLevel=%d -> setLevel=%d (BadgeLevelCap=%d, playersInRange=%d)",
+                    fullKey, origLevel, clamped, minCap, nearby.size()));
         }
 
         pkm.getLvl().setLevel(clamped);

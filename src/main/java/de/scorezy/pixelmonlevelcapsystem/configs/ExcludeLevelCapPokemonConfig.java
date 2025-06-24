@@ -12,8 +12,7 @@ public class ExcludeLevelCapPokemonConfig {
     public void loadFromMap(Map<String, Object> map) {
         Object listObj = map.get("excluded_pokemon");
         if (listObj instanceof List) {
-            List<Object> rawList = (List<Object>) listObj;
-            for (Object obj : rawList) {
+            for (Object obj : (List<Object>) listObj) {
                 if (obj instanceof String) {
                     excludedSpecies.add(((String) obj).toLowerCase());
                 }
@@ -21,8 +20,11 @@ public class ExcludeLevelCapPokemonConfig {
         }
     }
 
-    public boolean isExcluded(String speciesName) {
-        return excludedSpecies.contains(speciesName.toLowerCase());
+    public boolean isExcluded(String baseKey, String fullKey) {
+        if (excludedSpecies.contains(baseKey)) {
+            return true;
+        }
+        return excludedSpecies.contains(fullKey);
     }
 
     public Set<String> getExcludedSpecies() {
