@@ -1,5 +1,6 @@
 package de.scorezy.pixelmonlevelcapsystem.configs;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SettingsConfig {
@@ -14,24 +15,6 @@ public class SettingsConfig {
     private boolean levelCapPlayerTrades;
     private boolean checkDuplicateBadges;
     private boolean debug;
-
-    public SettingsConfig() {
-        setDefaults();
-    }
-
-    private void setDefaults() {
-        this.levelCapWildPokemons = true;
-        this.levelCapLegendaryPokemons = false;
-        this.blockCaptures = true;
-        this.blockInteractions = true;
-        this.blockLevelUps = true;
-        this.blockExperienceGain = true;
-        this.levelCapNpcTrades = true;
-        this.levelCapRaidPokemons = true;
-        this.levelCapPlayerTrades = true;
-        this.checkDuplicateBadges = true;
-        this.debug = false;
-    }
 
     @SuppressWarnings("unchecked")
     public void loadFromMap(Map<String, Object> data) {
@@ -51,7 +34,7 @@ public class SettingsConfig {
             if (o instanceof Boolean) this.blockInteractions = (Boolean) o;
             o = message.get("levelcap_level_ups");
             if (o instanceof Boolean) this.blockLevelUps = (Boolean) o;
-            o = message.get("save_experience_gainsave_experience_gain");
+            o = message.get("save_experience_gain");
             if (o instanceof Boolean) this.blockExperienceGain = (Boolean) o;
             o = message.get("levelcap_npc_trades");
             if (o instanceof Boolean) this.levelCapNpcTrades = (Boolean) o;
@@ -83,7 +66,9 @@ public class SettingsConfig {
         return blockInteractions;
     }
 
-    public boolean isBlockLevelUps() { return blockLevelUps;}
+    public boolean isBlockLevelUps() {
+        return blockLevelUps;
+    }
 
     public boolean isBlockExperienceGain() {
         return blockExperienceGain;

@@ -2,7 +2,9 @@ package de.scorezy.pixelmonlevelcapsystem.listeners;
 
 import com.pixelmonmod.pixelmon.api.events.ExperienceGainEvent;
 import com.pixelmonmod.pixelmon.api.enums.ExperienceGainType;
+import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.api.pokemon.stats.PokemonLevel;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
@@ -56,9 +58,8 @@ public class ExperienceListener {
             return;
         }
 
-        int currentXP       = pokemon.getExperience();
-        int gainedXP        = event.getExperience();
-        int expForNextLevel = pokemon.getPokemonLevelContainer().getExpForLevel(currentLevel + 1);
+        int currentXP = pokemon.getExperience();
+        int gainedXP  = event.getExperience();
 
         if (allowExpOverflow) {
             event.setCanceled(true);
@@ -79,21 +80,20 @@ public class ExperienceListener {
             player.sendMessage(new StringTextComponent(msg), player.getUUID());
 
         } else {
-            int maxAllowedXP = expForNextLevel - 1;
-            if (currentXP >= maxAllowedXP) {
-                pokemon.setExperience(maxAllowedXP);
-            } else {
-                int cappedXP = Math.min(currentXP + gainedXP, maxAllowedXP);
-                pokemon.setExperience(cappedXP);
-            }
-            event.setExperience(0);
             event.setCanceled(true);
+            event.setExperience(0);
+
+            PokemonLevel lvl = pokemon.getPokemonLevelContainer();
+            lvl.setLevel(levelCap);
+            int cappedXP = lvl.getExpForLevel(levelCap + 1) - 1;
+            lvl.setExp(cappedXP);
+            lvl.updateExpToNextLevel();
 
             if (debug) {
                 Logger.debug("Capped " + blockReason + " EXP for "
                         + pokemon.getSpecies().getName() +
-                        " (lvl " + currentLevel + "), cap: " + levelCap +
-                        ", EXP capped at: " + pokemon.getExperience());
+                        " (was lvl " + currentLevel + "), cap: " + levelCap +
+                        ", EXP capped at: " + cappedXP);
             }
 
             String msg;
@@ -102,6 +102,30 @@ public class ExperienceListener {
             } else {
                 msg = ConfigLoader.getMessagesConfig().getInteractBlocked();
             }
+            player.sendMessage(new StringTextComponent(msg), player.getUUID());
+        }
+    }
+
+    @SubscribeEvent
+    public void onLevelUp(LevelUpEvent.Pre event) {
+        ServerPlayerEntity player        = event.getPlayer();
+        int afterLevel                   = event.getAfterLevel();
+        int levelCap                     = BadgeUtils.getMaxLevelForPlayer(player);
+        boolean allowExpOverflow         = ConfigLoader.getSettingsConfig().isBlockExperienceGain();
+
+        if (afterLevel > levelCap) {
+            event.setCanceled(true);
+
+            Pokemon pokemon = event.getPokemon();
+            if (pokemon != null) {
+                PokemonLevel lvl = pokemon.getPokemonLevelContainer();
+                lvl.setLevel(levelCap);
+                int cappedXP = lvl.getExpForLevel(levelCap + 1) - 1;
+                lvl.setExp(cappedXP);
+                lvl.updateExpToNextLevel();
+            }
+
+            String msg = ConfigLoader.getMessagesConfig().getMaxLevelReached();
             player.sendMessage(new StringTextComponent(msg), player.getUUID());
         }
     }
