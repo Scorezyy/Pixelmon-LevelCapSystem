@@ -12,7 +12,7 @@ public class StartScreen {
         String serverType = server.getServerModName();
 
         log("§a  _    ___ ___ ");
-        log("§a | |  / __/ __|   §eLevelCapSystem v2.0.1");
+        log("§a | |  / __/ __|   §eLevelCapSystem v2.0.2");
         log("§a | |_| (__\\__ \\   §7Running on - §b" + serverType);
         log("§a |____\\___|___/   §7by Jxstn / Scorezy");
         log("");
