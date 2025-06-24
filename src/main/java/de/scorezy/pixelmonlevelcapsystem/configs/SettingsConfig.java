@@ -15,24 +15,6 @@ public class SettingsConfig {
     private boolean checkDuplicateBadges;
     private boolean debug;
 
-    public SettingsConfig() {
-        setDefaults();
-    }
-
-    private void setDefaults() {
-        this.levelCapWildPokemons = true;
-        this.levelCapLegendaryPokemons = false;
-        this.blockCaptures = true;
-        this.blockInteractions = true;
-        this.blockLevelUps = true;
-        this.blockExperienceGain = true;
-        this.levelCapNpcTrades = true;
-        this.levelCapRaidPokemons = true;
-        this.levelCapPlayerTrades = true;
-        this.checkDuplicateBadges = true;
-        this.debug = false;
-    }
-
     @SuppressWarnings("unchecked")
     public void loadFromMap(Map<String, Object> data) {
         Object s = data.get("settings");
