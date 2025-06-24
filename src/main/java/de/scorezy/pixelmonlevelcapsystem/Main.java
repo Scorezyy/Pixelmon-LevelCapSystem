@@ -6,7 +6,6 @@ import de.scorezy.pixelmonlevelcapsystem.commands.ReloadConfigCommand;
 import de.scorezy.pixelmonlevelcapsystem.listeners.*;
 import de.scorezy.pixelmonlevelcapsystem.listeners.spawn.SpawnLevelCapListener;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
-import de.scorezy.pixelmonlevelcapsystem.utils.PermissionHandler;
 import de.scorezy.pixelmonlevelcapsystem.utils.StartScreen;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
