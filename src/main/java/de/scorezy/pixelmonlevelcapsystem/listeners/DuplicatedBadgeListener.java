@@ -90,6 +90,5 @@ public class DuplicatedBadgeListener {
                 Logger.debug(playerName + " failed to add badge: " + newId);
             }
         }
-        System.out.println("Test");
     }
 }
