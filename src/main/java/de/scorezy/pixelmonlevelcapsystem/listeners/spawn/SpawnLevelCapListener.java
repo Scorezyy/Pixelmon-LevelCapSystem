@@ -1,6 +1,9 @@
 package de.scorezy.pixelmonlevelcapsystem.listeners.spawn;
 
 import com.pixelmonmod.pixelmon.entities.pixelmon.PixelmonEntity;
+import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.api.pokemon.species.Stats;
+import de.scorezy.pixelmonlevelcapsystem.configs.ExcludeLevelCapPokemonConfig;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
@@ -21,69 +24,65 @@ public class SpawnLevelCapListener {
 
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
-        if (!ConfigLoader.getSettingsConfig().isLevelCapWildPokemons()) {
-            return;
-        }
-        if (event.loadedFromDisk()) {
-            return;
-        }
+        if (!ConfigLoader.getSettingsConfig().isLevelCapWildPokemons()) return;
+        if (event.loadedFromDisk()) return;
 
         Entity ent = event.getEntity();
-        if (!(ent instanceof PixelmonEntity pkm)) {
-            return;
-        }
-        if (!(event.getLevel() instanceof ServerLevel world)) {
-            return;
-        }
+        if (!(ent instanceof PixelmonEntity pkm)) return;
+        if (!(event.getLevel() instanceof ServerLevel world)) return;
 
-        String speciesName = pkm.getPokemon().getSpecies().getName();
-        if (pkm.getPokemon().getSpecies().isLegendary()
+        Pokemon poke = pkm.getPokemon();
+
+        String baseKey = poke.getSpecies().getStrippedName().toLowerCase();
+        Stats formStats = poke.getForm();
+        String formJsonName = formStats.getName().toLowerCase();
+        String fullKey = (formJsonName.equals("normal") || formJsonName.equals(baseKey) || formJsonName.isEmpty())
+                ? baseKey
+                : formJsonName + "-" + baseKey;
+
+        if (poke.getSpecies().isLegendary()
                 && !ConfigLoader.getSettingsConfig().isLevelCapLegendaryPokemons()) {
             if (ConfigLoader.getSettingsConfig().isDebug()) {
-                Logger.debug("Skipping legendary " + speciesName);
+                Logger.debug("Skipping legendary " + fullKey);
             }
             return;
         }
 
         if (pkm.getOwner() != null
-                || pkm.getPokemon().getOwnerPlayerUUID() != null) {
+                || poke.getOwnerPlayerUUID() != null) {
             return;
         }
 
         CompoundTag data = pkm.getPersistentData();
-        if (data.getBoolean(NBT_CLAMPED)) {
-            return;
-        }
+        if (data.getBoolean(NBT_CLAMPED)) return;
 
-        if (ConfigLoader.getExcludeLevelCapPokemonConfig().isExcluded(speciesName)) {
+        ExcludeLevelCapPokemonConfig excl = ConfigLoader.getExcludeLevelCapPokemonConfig();
+        if (excl.isExcluded(baseKey, fullKey)) {
             if (ConfigLoader.getSettingsConfig().isDebug()) {
-                Logger.debug("Skipping excluded Pokémon " + speciesName);
+                Logger.debug("Skipping excluded Pokémon " + fullKey);
             }
             return;
         }
 
         List<ServerPlayer> nearby = world.getPlayers(pl -> pl.distanceTo(pkm) <= RADIUS);
-        if (nearby.isEmpty()) {
-
-            return;
-        }
+        if (nearby.isEmpty()) return;
 
         int minCap = nearby.stream()
                 .mapToInt(BadgeUtils::getMaxLevelForPlayer)
                 .min()
                 .orElse(1);
 
-        int origLevel = pkm.getPokemon().getPokemonLevel();
+        int origLevel = poke.getPokemonLevel();
         int clamped = Math.min(Math.max(1, origLevel), minCap);
 
         if (origLevel > clamped && ConfigLoader.getSettingsConfig().isDebug()) {
             Logger.debug(String.format(
                     "%s origLevel=%d -> setLevel=%d (BadgeLevelCap=%d, playersInRange=%d)",
-                    speciesName, origLevel, clamped, minCap, nearby.size()
+                    fullKey, origLevel, clamped, minCap, nearby.size()
             ));
         }
 
-        pkm.getPokemon().setLevel(clamped);
+        poke.setLevel(clamped);
         data.putBoolean(NBT_CLAMPED, true);
     }
 }

@@ -20,8 +20,11 @@ public class ExcludeLevelCapPokemonConfig {
         }
     }
 
-    public boolean isExcluded(String speciesName) {
-        return excludedSpecies.contains(speciesName.toLowerCase());
+    public boolean isExcluded(String baseKey, String fullKey) {
+        if (excludedSpecies.contains(baseKey)) {
+            return true;
+        }
+        return excludedSpecies.contains(fullKey);
     }
 
     public Set<String> getExcludedSpecies() {
