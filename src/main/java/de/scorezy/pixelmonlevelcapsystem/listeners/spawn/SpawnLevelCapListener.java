@@ -10,6 +10,7 @@ import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +35,12 @@ public class SpawnLevelCapListener {
         if (!(ent instanceof PixelmonEntity)) {
             return;
         }
+
+        World world = event.getWorld();
+        if (!(world instanceof ServerWorld)) {
+            return;
+        }
+
         PixelmonEntity pkm = (PixelmonEntity) ent;
         Pokemon poke = pkm.getPokemon();
 
@@ -79,8 +86,9 @@ public class SpawnLevelCapListener {
             return;
         }
 
-        ServerWorld world = (ServerWorld) pkm.level;
-        List<ServerPlayerEntity> nearby = world.players().stream()
+        // Jetzt können wir sicher casten, da wir wissen, dass es Server-Seite ist
+        ServerWorld serverWorld = (ServerWorld) world;
+        List<ServerPlayerEntity> nearby = serverWorld.players().stream()
                 .filter(pl -> pl instanceof ServerPlayerEntity)
                 .map(pl -> (ServerPlayerEntity) pl)
                 .filter(pl -> pl.distanceTo(pkm) <= RADIUS)
