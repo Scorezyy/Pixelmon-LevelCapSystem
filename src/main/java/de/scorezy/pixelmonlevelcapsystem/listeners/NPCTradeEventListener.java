@@ -5,9 +5,9 @@ import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
 
 public class NPCTradeEventListener {
 
@@ -22,7 +22,7 @@ public class NPCTradeEventListener {
             return;
         }
 
-        ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+        ServerPlayer player = (ServerPlayer) event.getPlayer();
         String playerName = player.getName().getString();
         String speciesName = tradedPokemon.getSpecies().getName();
         int originalLevel = tradedPokemon.getPokemonLevel();
@@ -38,6 +38,6 @@ public class NPCTradeEventListener {
                 " (lvl " + originalLevel + ") from NPC (levelcap to " + maxLevel + ")");
         tradedPokemon.setLevel(maxLevel);
         String message = ConfigLoader.getMessagesConfig().getNpcTradeAccess();
-        player.sendMessage(new StringTextComponent(message), player.getUUID());
+        player.sendSystemMessage(Component.literal(message));
     }
 }

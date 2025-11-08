@@ -4,10 +4,10 @@ import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.SubscribeEvent;
 
 public class CaptureEventListener {
 
@@ -17,10 +17,11 @@ public class CaptureEventListener {
             return;
         }
 
-        ServerPlayerEntity player = event.getPlayer();
+        ServerPlayer player = event.getPlayer();
         String playerName = player.getName().getString();
-        String pokemonName = event.getPokemon().getPokemonName();
-        int pokemonLevel = event.getPokemon().getLvl().getPokemonLevel();
+        String pokemonName = event.getPokemon().getSpecies().getName();
+        int pokemonLevel = event.getPokemon().getPokemonLevel();
+
         int maxLevel = BadgeUtils.getMaxLevelForPlayer(player);
 
         if (pokemonLevel > maxLevel) {
@@ -33,29 +34,29 @@ public class CaptureEventListener {
         }
     }
 
-    private void handleCaptureRestriction(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
+    private void handleCaptureRestriction(CaptureEvent.StartCapture event, ServerPlayer player) {
         cancelEvent(event, player);
         returnBallToPlayer(event, player);
     }
 
-    private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
+    private void cancelEvent(CaptureEvent.StartCapture event, ServerPlayer player) {
         event.setCanceled(true);
         String message = ConfigLoader.getMessagesConfig().getCaptureBlocked();
-        player.sendMessage(new StringTextComponent(message), player.getUUID());
+        player.sendSystemMessage(Component.literal(message));
     }
 
-    private void returnBallToPlayer(CaptureEvent.StartCapture event, ServerPlayerEntity player) {
-        ItemStack ballStack = event.getPokeBall().getBallType().getBallItem();
+    private void returnBallToPlayer(CaptureEvent.StartCapture event, ServerPlayer player) {
+        ItemStack ballStack = event.getPokeBall().getBallItem();
         if (!ballStack.isEmpty()) {
             addBallToInventory(player, ballStack);
         }
     }
 
-    private void addBallToInventory(ServerPlayerEntity player, ItemStack ballStack) {
-        for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-            ItemStack slotStack = player.inventory.getItem(i);
+    private void addBallToInventory(ServerPlayer player, ItemStack ballStack) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack slotStack = player.getInventory().getItem(i);
             if (slotStack.isEmpty()) {
-                player.inventory.setItem(i, ballStack.copy());
+                player.getInventory().setItem(i, ballStack.copy());
                 return;
             }
             if (slotStack.getItem() == ballStack.getItem()) {

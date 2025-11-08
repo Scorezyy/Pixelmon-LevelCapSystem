@@ -5,10 +5,9 @@ import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
 
 public class TradeEventListener {
 
@@ -18,15 +17,15 @@ public class TradeEventListener {
             return;
         }
 
-        ServerPlayerEntity p1 = (ServerPlayerEntity) event.getPlayer1();
-        ServerPlayerEntity p2 = (ServerPlayerEntity) event.getPlayer2();
+        ServerPlayer p1 = (ServerPlayer) event.getPlayer1();
+        ServerPlayer p2 = (ServerPlayer) event.getPlayer2();
 
         if (attemptBlock(event.getPokemon1(), p1, p2) || attemptBlock(event.getPokemon2(), p2, p1)) {
             event.setCanceled(true);
         }
     }
 
-    private boolean attemptBlock(Pokemon pokemon, ServerPlayerEntity owner, ServerPlayerEntity partner) {
+    private boolean attemptBlock(Pokemon pokemon, ServerPlayer owner, ServerPlayer partner) {
         if (pokemon == null) return false;
 
         boolean debug       = ConfigLoader.getSettingsConfig().isDebug();
@@ -50,14 +49,8 @@ public class TradeEventListener {
                 ));
             }
 
-            partner.sendMessage(
-                    new StringTextComponent(ConfigLoader.getMessagesConfig().getTradeBlocked()),
-                    Util.NIL_UUID
-            );
-            owner.sendMessage(
-                    new StringTextComponent(ConfigLoader.getMessagesConfig().getTradeBlockedPartner()),
-                    Util.NIL_UUID
-            );
+            partner.sendSystemMessage(Component.literal(ConfigLoader.getMessagesConfig().getTradeBlocked()));
+            owner.sendSystemMessage(Component.literal(ConfigLoader.getMessagesConfig().getTradeBlockedPartner()));
 
             return true;
         }

@@ -1,12 +1,12 @@
 package de.scorezy.pixelmonlevelcapsystem.utils;
 
 import net.minecraft.server.MinecraftServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StartScreen {
 
-    private static final Logger LOGGER = LogManager.getLogger("LevelCapSystem");
+    private static final Logger LOGGER = LoggerFactory.getLogger("LevelCapSystem");
 
     public static void printStartupBanner(MinecraftServer server) {
         String serverType = server.getServerModName();

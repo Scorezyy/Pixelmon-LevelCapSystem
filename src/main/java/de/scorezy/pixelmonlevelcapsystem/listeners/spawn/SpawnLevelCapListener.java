@@ -7,26 +7,23 @@ import de.scorezy.pixelmonlevelcapsystem.configs.ExcludeLevelCapPokemonConfig;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-@Mod.EventBusSubscriber(modid = "pixelmonlevelcapsystem", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SpawnLevelCapListener {
 
     private static final String NBT_CLAMPED = "PixelmonLevelCap.Cap";
     private static final double RADIUS = 6 * 16;
 
     @SubscribeEvent
-    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+    public void onEntityJoinWorld(EntityJoinLevelEvent event) {
         if (!ConfigLoader.getSettingsConfig().isLevelCapWildPokemons()) {
             return;
         }
@@ -36,8 +33,8 @@ public class SpawnLevelCapListener {
             return;
         }
 
-        World world = event.getWorld();
-        if (!(world instanceof ServerWorld)) {
+        Level world = event.getLevel();
+        if (!(world instanceof ServerLevel)) {
             return;
         }
 
@@ -68,12 +65,11 @@ public class SpawnLevelCapListener {
         }
 
         if (pkm.getOwner() != null
-                || poke.getOwnerPlayer() != null
-                || poke.getOwnerTrainer() != null) {
+                || poke.getOwnerPlayer() != null) {
             return;
         }
 
-        CompoundNBT data = pkm.getPersistentData();
+        CompoundTag data = pkm.getPersistentData();
         if (data.getBoolean(NBT_CLAMPED)) {
             return;
         }
@@ -86,11 +82,8 @@ public class SpawnLevelCapListener {
             return;
         }
 
-        // Jetzt können wir sicher casten, da wir wissen, dass es Server-Seite ist
-        ServerWorld serverWorld = (ServerWorld) world;
-        List<ServerPlayerEntity> nearby = serverWorld.players().stream()
-                .filter(pl -> pl instanceof ServerPlayerEntity)
-                .map(pl -> (ServerPlayerEntity) pl)
+        ServerLevel serverWorld = (ServerLevel) world;
+        List<ServerPlayer> nearby = serverWorld.players().stream()
                 .filter(pl -> pl.distanceTo(pkm) <= RADIUS)
                 .collect(Collectors.toList());
 

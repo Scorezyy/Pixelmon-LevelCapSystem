@@ -8,20 +8,18 @@ import com.pixelmonmod.pixelmon.api.pokemon.stats.PokemonLevel;
 import de.scorezy.pixelmonlevelcapsystem.utils.BadgeUtils;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid = "pixelmonlevelcapsystem", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ExperienceListener {
 
     @SubscribeEvent
     public void onExperienceGain(ExperienceGainEvent event) {
-        Pokemon pokemon = event.pokemon.getPokemon();
+        Pokemon pokemon = event.pokemon;
 
         if (pokemon == null) return;
-        ServerPlayerEntity player = pokemon.getOwnerPlayer();
+        ServerPlayer player = pokemon.getOwnerPlayer();
         if (player == null) return;
 
         boolean capItems         = ConfigLoader.getSettingsConfig().isBlockInteractions();
@@ -77,7 +75,7 @@ public class ExperienceListener {
             String msg = template
                     .replace("{pokemon}", pokemon.getSpecies().getName())
                     .replace("{exp}", String.valueOf(gainedXP));
-            player.sendMessage(new StringTextComponent(msg), player.getUUID());
+            player.sendSystemMessage(Component.literal(msg));
 
         } else {
             event.setCanceled(true);
@@ -102,13 +100,12 @@ public class ExperienceListener {
             } else {
                 msg = ConfigLoader.getMessagesConfig().getInteractBlocked();
             }
-            player.sendMessage(new StringTextComponent(msg), player.getUUID());
+            player.sendSystemMessage(Component.literal(msg));
         }
     }
 
-    @SubscribeEvent
     public void onLevelUp(LevelUpEvent.Pre event) {
-        ServerPlayerEntity player        = event.getPlayer();
+        ServerPlayer player        = event.getPlayer();
         int afterLevel                   = event.getAfterLevel();
         int levelCap                     = BadgeUtils.getMaxLevelForPlayer(player);
         boolean allowExpOverflow         = ConfigLoader.getSettingsConfig().isBlockExperienceGain();
@@ -126,7 +123,7 @@ public class ExperienceListener {
             }
 
             String msg = ConfigLoader.getMessagesConfig().getMaxLevelReached();
-            player.sendMessage(new StringTextComponent(msg), player.getUUID());
+            player.sendSystemMessage(Component.literal(msg));
         }
     }
 }

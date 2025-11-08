@@ -1,45 +1,33 @@
 package de.scorezy.pixelmonlevelcapsystem.utils;
 
+import com.pixelmonmod.pixelmon.init.registry.PixelmonDataComponents;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem.BadgeCase;
 import de.scorezy.pixelmonlevelcapsystem.configs.BadgeLevelConfig;
-import de.scorezy.pixelmonlevelcapsystem.configs.SettingsConfig;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.server.permission.PermissionAPI;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public class BadgeUtils {
 
-    public static ItemStack findBadgeCaseItemStack(ServerPlayerEntity player) {
-        if (player == null || player.inventory == null) {
-            return null;
+    public static ItemStack findBadgeCaseItemStack(ServerPlayer player) {
+        if (player == null) {
+            return ItemStack.EMPTY;
         }
-        return player.inventory.items.stream()
-                .filter(stack -> stack != null && stack.getItem() instanceof BadgeCaseItem)
-                .findFirst()
-                .orElse(null);
+        ItemStack stack = BadgeCaseItem.findFirstRegisteredBadgeCase(player);
+        return stack != null ? stack : ItemStack.EMPTY;
     }
 
-    public static int getMaxLevelForPlayer(ServerPlayerEntity player) {
+    public static int getMaxLevelForPlayer(ServerPlayer player) {
         BadgeLevelConfig blc = ConfigLoader.getBadgeLevelConfig();
-        SettingsConfig sc = ConfigLoader.getSettingsConfig();
-
-        if (blc.isUsePermissions()) {
-            return blc.getPermissionLevels().entrySet().stream()
-                    .filter(e -> PermissionAPI.hasPermission(player, e.getKey()))
-                    .mapToInt(Map.Entry::getValue)
-                    .max()
-                    .orElse(getDefaultBadgeLevel(blc));
-        }
 
         ItemStack stack = findBadgeCaseItemStack(player);
-        if (stack != null) {
-            BadgeCase badgeCase = BadgeCaseItem.BadgeCase.readFromItemStack(stack);
+        if (!stack.isEmpty() && stack.getItem() instanceof BadgeCaseItem) {
+            BadgeCase badgeCase = stack.get(PixelmonDataComponents.BADGE_CASE);
             if (badgeCase != null && badgeCase.isOwner(player)) {
-                return getMaxLevelByBadgeCount(blc, badgeCase.badges.size());
+                return getMaxLevelByBadgeCount(blc, badgeCase.badges().size());
             }
         }
 

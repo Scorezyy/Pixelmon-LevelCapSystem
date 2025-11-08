@@ -1,31 +1,28 @@
 package de.scorezy.pixelmonlevelcapsystem.listeners;
-
+import com.pixelmonmod.pixelmon.init.registry.PixelmonDataComponents;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem;
 import com.pixelmonmod.pixelmon.items.BadgeCaseItem.BadgeCase;
 import com.pixelmonmod.pixelmon.items.BadgeItem;
 import de.scorezy.pixelmonlevelcapsystem.configs.SettingsConfig;
 import de.scorezy.pixelmonlevelcapsystem.utils.ConfigLoader;
 import de.scorezy.pixelmonlevelcapsystem.utils.Logger;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
-@Mod.EventBusSubscriber(modid = "pixelmonlevelcapsystem")
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class DuplicatedBadgeListener {
 
     @SubscribeEvent
-    public static void onBadgeRightClick(RightClickItem event) {
+    public void onBadgeRightClick(PlayerInteractEvent.RightClickItem event) {
         SettingsConfig settings = ConfigLoader.getSettingsConfig();
         if (!settings.isCheckDuplicateBadges()) {
             return;
         }
 
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getEntity();
         ItemStack held = event.getItemStack();
 
         if (!(held.getItem() instanceof BadgeItem)) {
@@ -33,7 +30,7 @@ public class DuplicatedBadgeListener {
         }
 
         String playerName = player.getName().getString();
-        String newId = held.getItem().getRegistryName().toString();
+        String newId = held.getItem().toString();
 
         if (settings.isDebug()) {
             Logger.debug(playerName + " attempting to add badge: " + newId);
@@ -47,7 +44,7 @@ public class DuplicatedBadgeListener {
             return;
         }
 
-        BadgeCase badgeCase = BadgeCase.readFromItemStack(caseStack);
+        BadgeCase badgeCase = caseStack.get(PixelmonDataComponents.BADGE_CASE);
         if (badgeCase == null || !badgeCase.isOwner(player)) {
             if (settings.isDebug()) {
                 Logger.debug(playerName + " is not owner of BadgeCase");
@@ -56,8 +53,8 @@ public class DuplicatedBadgeListener {
         }
 
         boolean isDuplicate = false;
-        for (ItemStack existing : badgeCase.badges) {
-            if (existing.getItem().getRegistryName().toString().equals(newId)) {
+        for (ItemStack existing : badgeCase.badges()) {
+            if (existing.getItem().toString().equals(newId)) {
                 isDuplicate = true;
                 break;
             }
@@ -67,13 +64,13 @@ public class DuplicatedBadgeListener {
             if (settings.isDebug()) {
                 Logger.debug(playerName + " attempted duplicate badge: " + newId);
             }
-            if (player instanceof ServerPlayerEntity) {
-                ServerPlayerEntity sp = (ServerPlayerEntity) player;
+            if (player instanceof ServerPlayer) {
+                ServerPlayer sp = (ServerPlayer) player;
                 String message = ConfigLoader.getMessagesConfig().getDuplicateBadgesBlocked();
-                sp.sendMessage(new StringTextComponent(message), sp.getUUID());
+                sp.sendSystemMessage(Component.literal(message));
             }
             event.setCanceled(true);
-            event.setCancellationResult(ActionResultType.FAIL);
+            event.setCancellationResult(InteractionResult.FAIL);
             return;
         }
 
@@ -81,7 +78,7 @@ public class DuplicatedBadgeListener {
         if (added) {
             held.shrink(1);
             event.setCanceled(true);
-            event.setCancellationResult(ActionResultType.SUCCESS);
+            event.setCancellationResult(InteractionResult.SUCCESS);
             if (settings.isDebug()) {
                 Logger.debug(playerName + " successfully added badge: " + newId);
             }

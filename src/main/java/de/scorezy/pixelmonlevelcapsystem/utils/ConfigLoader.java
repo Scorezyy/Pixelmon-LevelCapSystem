@@ -4,7 +4,6 @@ import de.scorezy.pixelmonlevelcapsystem.configs.BadgeLevelConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.ExcludeLevelCapPokemonConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.MessagesConfig;
 import de.scorezy.pixelmonlevelcapsystem.configs.SettingsConfig;
-import info.pixelmon.repack.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +12,8 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import net.minecraftforge.fml.loading.FMLPaths;
+import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.Yaml;
+import net.neoforged.fml.loading.FMLPaths;
 
 public class ConfigLoader {
     private static BadgeLevelConfig badgeLevelConfig = new BadgeLevelConfig();
