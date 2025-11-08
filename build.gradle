@@ -36,8 +36,14 @@ neoForge {
         client {
             client()
 
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+
+            def debugWorldPath = project.file('run/saves/debug').absolutePath
+
+            programArguments.addAll(
+                    '--username', 'Jxstn',
+                    '--quickPlaySingleplayer', debugWorldPath
+            )
         }
 
         server {
@@ -53,7 +59,9 @@ neoForge {
 
         data {
             data()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--mod', project.mod_id, '--all',
+                    '--output', file('src/generated/resources/').getAbsolutePath(),
+                    '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
         configureEach {
@@ -70,7 +78,6 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"

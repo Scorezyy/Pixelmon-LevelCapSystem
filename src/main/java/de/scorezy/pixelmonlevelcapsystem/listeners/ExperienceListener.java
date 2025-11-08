@@ -33,6 +33,7 @@ public class ExperienceListener {
 
         int currentLevel = pokemon.getPokemonLevel();
         int levelCap     = BadgeUtils.getMaxLevelForPlayer(player);
+
         if (currentLevel < levelCap) {
             return;
         }
@@ -59,6 +60,8 @@ public class ExperienceListener {
         int currentXP = pokemon.getExperience();
         int gainedXP  = event.getExperience();
 
+        PokemonLevel lvl = pokemon.getPokemonLevelContainer();
+
         if (allowExpOverflow) {
             event.setCanceled(true);
             int newTotalXP = currentXP + gainedXP;
@@ -81,7 +84,6 @@ public class ExperienceListener {
             event.setCanceled(true);
             event.setExperience(0);
 
-            PokemonLevel lvl = pokemon.getPokemonLevelContainer();
             lvl.setLevel(levelCap);
             int cappedXP = lvl.getExpForLevel(levelCap + 1) - 1;
             lvl.setExp(cappedXP);
@@ -104,11 +106,11 @@ public class ExperienceListener {
         }
     }
 
+    @SubscribeEvent
     public void onLevelUp(LevelUpEvent.Pre event) {
         ServerPlayer player        = event.getPlayer();
         int afterLevel                   = event.getAfterLevel();
         int levelCap                     = BadgeUtils.getMaxLevelForPlayer(player);
-        boolean allowExpOverflow         = ConfigLoader.getSettingsConfig().isBlockExperienceGain();
 
         if (afterLevel > levelCap) {
             event.setCanceled(true);

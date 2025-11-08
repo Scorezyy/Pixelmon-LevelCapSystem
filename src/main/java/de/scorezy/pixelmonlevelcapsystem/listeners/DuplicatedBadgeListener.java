@@ -11,11 +11,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class DuplicatedBadgeListener {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onBadgeRightClick(PlayerInteractEvent.RightClickItem event) {
         SettingsConfig settings = ConfigLoader.getSettingsConfig();
         if (!settings.isCheckDuplicateBadges()) {
@@ -64,27 +65,15 @@ public class DuplicatedBadgeListener {
             if (settings.isDebug()) {
                 Logger.debug(playerName + " attempted duplicate badge: " + newId);
             }
-            if (player instanceof ServerPlayer) {
-                ServerPlayer sp = (ServerPlayer) player;
+            if (player instanceof ServerPlayer sp) {
                 String message = ConfigLoader.getMessagesConfig().getDuplicateBadgesBlocked();
                 sp.sendSystemMessage(Component.literal(message));
             }
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
-            return;
-        }
-
-        boolean added = BadgeCaseItem.addBadge(caseStack, player, held.copy());
-        if (added) {
-            held.shrink(1);
-            event.setCanceled(true);
-            event.setCancellationResult(InteractionResult.SUCCESS);
-            if (settings.isDebug()) {
-                Logger.debug(playerName + " successfully added badge: " + newId);
-            }
         } else {
             if (settings.isDebug()) {
-                Logger.debug(playerName + " failed to add badge: " + newId);
+                Logger.debug(playerName + " allowed to add badge: " + newId);
             }
         }
     }

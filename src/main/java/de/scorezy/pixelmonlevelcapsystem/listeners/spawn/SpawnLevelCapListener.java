@@ -87,6 +87,10 @@ public class SpawnLevelCapListener {
                 .filter(pl -> pl.distanceTo(pkm) <= RADIUS)
                 .collect(Collectors.toList());
 
+        if (nearby.isEmpty()) {
+            return;
+        }
+
         int minCap = nearby.stream()
                 .mapToInt(BadgeUtils::getMaxLevelForPlayer)
                 .min()

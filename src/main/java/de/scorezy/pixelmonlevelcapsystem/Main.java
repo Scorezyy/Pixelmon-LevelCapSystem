@@ -2,6 +2,7 @@ package de.scorezy.pixelmonlevelcapsystem;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.pixelmonmod.pixelmon.Pixelmon;
+import de.scorezy.pixelmonlevelcapsystem.commands.DebugCommand;
 import de.scorezy.pixelmonlevelcapsystem.commands.ReloadConfigCommand;
 import de.scorezy.pixelmonlevelcapsystem.listeners.*;
 import de.scorezy.pixelmonlevelcapsystem.listeners.spawn.SpawnLevelCapListener;
@@ -28,13 +29,14 @@ public class Main {
         event.enqueueWork(() -> {
             ConfigLoader.loadConfig();
 
+            NeoForge.EVENT_BUS.register(new DuplicatedBadgeListener());
+            NeoForge.EVENT_BUS.register(new SpawnLevelCapListener());
+
             Pixelmon.EVENT_BUS.register(new CaptureEventListener());
             Pixelmon.EVENT_BUS.register(new TradeEventListener());
             Pixelmon.EVENT_BUS.register(new ExperienceListener());
             Pixelmon.EVENT_BUS.register(new RaidCaptureEventListener());
             Pixelmon.EVENT_BUS.register(new NPCTradeEventListener());
-            Pixelmon.EVENT_BUS.register(new SpawnLevelCapListener());
-            Pixelmon.EVENT_BUS.register(new DuplicatedBadgeListener());
         });
     }
 
@@ -45,6 +47,7 @@ public class Main {
 
             CommandDispatcher<CommandSourceStack> dispatcher = event.getServer().getCommands().getDispatcher();
             ReloadConfigCommand.register(dispatcher);
+            DebugCommand.register(dispatcher);
         }
     }
 
